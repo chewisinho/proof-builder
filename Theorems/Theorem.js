@@ -1,10 +1,17 @@
 'use strict';
-var Point = require('../Objects/Point.js');
-var LineSegment = require('../Objects/LineSegment.js');
-var Triangle = require('../Objects/Triangle.js');
-var Congruence = require('../Properties/Congruence.js');
+var Point;
+var LineSegment;
+var Triangle;
+var Congruence;
 
+require( ['../Objects/Point.js','../Objects/LineSegment.js','../Objects/Triangle.js','../Properties/Congruence.js'],
+ function(Pt,Ls,Tri,Con){
+ 	Point = Point;
+ 	LineSegment = Ls;
+ 	Triangle = Tri;
+ 	Congruence = Con;
 
+})
 // MAIN THEOREM CLASS
 
 
