@@ -30,7 +30,7 @@ LineSegment(Object):
 A `Triangle` is an object with three `Point` objects.
 
 ```
-Triangle(Object)
+Triangle(Object):
 
 	Point point_1
 	Point point_2
@@ -52,6 +52,16 @@ Congruence:
     Object object_2
 ```
 
+```TriangleCongruence(Congruence):
+
+    Triangle tr_1
+    Triangle tr_2
+
+    # Sides of each triangle such that corresponding indices indicate congruence.
+    Array tr_1_sides
+    Array tr_2_sides
+```
+
 ## Theorems
 
 A `Theorem` applies its method to objects that satisfy the conditions.
@@ -66,25 +76,33 @@ Theorem:
     void applyResult(Object... objs)
 ```
 
+## Starter Theorems
+
 **Reflexive Property**
-  * Objects: `LineSegment`
+  * Objects: `LineSegment l`
   * Conditions:
     * None
-  * Results;
-    * Creates a `Congruence` with `obj` and `obj`
+  * Results:
+    * Creates a `Congruence(l, l)`
 
 **Midpoint Splitting Theorem**
   * Objects: `LineSegment`
   * Conditions:
     * `obj.midpoint` is not `null`
   * Results:
-    * creates a `Line Segment` with `obj.start` and `obj.midpoint`
-    * creates a `Line Segment` with `obj.midpoint` and `obj.end`
-    * creates a `Congruence` with the two `LineSegment` objects
+    * Creates `l1 = LineSegment(obj.start, obj.midpoint)`
+    * Creates `l2 = LineSegment(obj.midpoint, obj.end)`
+    * Creates `Congruence(l1, l2)`
 
 **SSS Postulate**
-  * Objects: `Triangle`, `Triangle`
+  * Objects: `Triangle tr1`, `Triangle tr2`
   * Conditions:
-    * for every `side1` of `obj1`, there is a `side2` of `obj2` such that there is a `Congruence` object with `side1` and `side2`
+    * For every `side1` of `tr1`, there exists a `side2` of `tr2` such that there exists `Congruence(side1, side2)`
   * Results:
-    * creates a `Congruence` with the two `Triangle` objects
+    * Creates `TriangleCongruence(tr1, tr2)` with the corresponding sides
+
+## Proving Theorems
+
+**Exercise 1: SSS**
+  * Given: `Triangle ABD`, `Triangle CBD`, `AC.midpoint = B`
+  * Goal: `Congruence(ABD, CBD)`
