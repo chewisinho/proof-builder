@@ -4,4 +4,4 @@ var Point = function(name) {
     this.name = name;
 }
 
-module.exports = Point;
+define(function() { return Point; });
