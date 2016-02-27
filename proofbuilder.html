@@ -1,0 +1,43 @@
+<!-- Proof Builder HTML Skeleton -->
+
+<!doctype html>
+<html>
+    <head>
+        <title>Proof Builder</title>
+        <link rel="stylesheet" href="./style.css" type="text/css" />
+
+        <!-- include interact.js -->
+        <script src="https://cdn.jsdelivr.net/g/interact.js@1.2.6(interact.min.js+interact.js)"></script>
+    </head>
+
+    <body>
+        <!-- pane containing given theorems or previously proved theorems -->
+        <div id="theorem-pane">
+            <!-- tab buttons -->
+            <div id="theorem-tabs">
+                <button id="curr-theorems" type="button">Current Theorems</button>
+                <button id="built-theorems" type="button">Built Theorems</button>
+            </div>
+
+            <br style="clear:both" />
+
+            <!-- theorem lists -->
+            <div id="curr-theorems-content" class="theorem-content">
+            </div>
+            <div id="built-theorems-content" class="theorem-content" style="display:none">
+                <p> Testing 2 </p>
+            </div>
+        </div>
+
+        <!-- pane containing the visual proof -->
+        <div id="builder-pane">
+
+            <!-- just a test, modify later -->
+            <div id="dragtest"></div>
+        </div>
+
+        <!-- scripts -->
+        <script src="tabs.js"></script>
+        <script src="canvas.js"></script>
+    </body>
+</html>
