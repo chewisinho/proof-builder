@@ -52,7 +52,8 @@ Congruence:
     Object object_2
 ```
 
-```TriangleCongruence(Congruence):
+```
+TriangleCongruence(Congruence):
 
     Triangle tr_1
     Triangle tr_2
