@@ -84,7 +84,7 @@ Theorem:
   * Conditions:
     * None
   * Results:
-    * Creates a `Congruence(l, l)`
+    * Creates `Congruence(l, l)`
 
 **Midpoint Splitting Theorem**
   * Objects: `LineSegment`
