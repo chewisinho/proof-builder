@@ -1,8 +1,6 @@
 # Proof Builder
 Project for HackTech 2016.
 
-# Objects
-
 ## Points
 
 A Point is a geometrical point defined by a single letter.
