@@ -1,33 +1,31 @@
 'use strict';
 
 /*
- * Constructor for a GraphicLineSegment
+ * Constructor for a GraphicTriangle
  * pt1 - a GraphicPoint reference
  * pt2 - a GraphicPoint reference
+ * pt3 - a GraphicPoint reference
  */
-var GraphicLineSegment = function(pt1, pt2) {
+var GraphicLineSegment = function(pt1, pt2, pt3) {
     this.pt1 = pt1;
     this.pt2 = pt2;
+    this.pt3 = pt3;
+    this.s1 = new GraphicLineSegment(pt1, pt2);
+    this.s2 = new GraphicLineSegment(pt2, pt3);
+    this.s3 = new GraphicLineSegment(pt3, pt1);
+
     this.thickness = 4;
     this.highlight = false;
 }
 
 GraphicLineSegment.prototype.contains = function(mx, my) {
-    var linept = nearestLinePoint(this.pt1, this.pt2, mx, my);
-    return (linept.x - mx) * (linept.x - mx) +
-           (linept.y - my) * (linept.y - my) < this.thickness;
+    return s1.contains(mx, my) || s2.contains(mx, my) || s3.contains(mx, my);
 }
 
 GraphicLineSegment.prototype.draw = function(ctx) {
     // draw the highlight
     if (this.highlight) {
-        ctx.strokeStyle = '#AA0000';
-        ctx.lineWidth = this.thickness + 2;
-        ctx.beginPath();
-        ctx.moveTo(this.pt1.x, this.pt1.y);
-        ctx.lineTo(this.pt2.x, this.pt2.y);
-        ctx.closePath();
-        ctx.stroke();
+
     }
 
     // draw the points
@@ -63,3 +61,5 @@ function nearestLinePoint(lp1, lp2, x, y) {
 };
 
 define(function() { return GraphicLineSegment; });
+
+

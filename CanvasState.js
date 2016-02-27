@@ -66,6 +66,7 @@ var CanvasState = function(canvas) {
                 myState.dragoffy = my - mySel.y;
                 myState.dragging = true;
                 myState.selection = mySel;
+                mySel.select();
                 myState.valid = false;
                 return;
             }
@@ -74,6 +75,7 @@ var CanvasState = function(canvas) {
         // if we can't find any objects but we still have one
         // selected, deselect it
         if (myState.selection) {
+            myState.selection.deselect();
             myState.selection = null;
             myState.valid = false; // repaint
         }
@@ -90,15 +92,28 @@ var CanvasState = function(canvas) {
         }
     }, true);
 
+    // hover
+    canvas.addEventListener('mouseover', function(e) {
+        var mouse = myState.getMouse(e);
+        var mx = mouse.x;
+        var my = mouse.y;
+
+        var shapes = myState.shapes;
+        var numshapes = shapes.length;
+        // look for a shape the mouse is dragging
+        for (var i = numshapes - 1; i >= 0; i--) {
+            if (shapes[i].contains(mx, my)) {
+                sel('html').style.cursor = 'pointer';
+                return;
+            }
+        }
+
+        sel('html').style.cursor = 'auto';
+    }, true);
+
     // mouse release event
     canvas.addEventListener('mouseup', function(e) {
         myState.dragging = false;
-    }, true);
-
-    // double click for making new shapes - TODO not relevant to our project
-    canvas.addEventListener('dblclick', function(e) {
-        var mouse = myState.getMouse(e);
-        myState.addShape(new GraphicPoint(mouse.x - 10, mouse.y - 10, 20, 20, 'rgba(0,255,0,.6)'));
     }, true);
 
     // options for selection color/width

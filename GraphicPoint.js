@@ -11,6 +11,7 @@ var GraphicPoint = function(x, y, pt) {
     this.y = y || 0;
     this.radius = 3;
     this.name = pt.name || 'null';
+    this.highlight = false;
 }
 
 GraphicPoint.prototype.contains = function(mx, my) {
@@ -19,6 +20,18 @@ GraphicPoint.prototype.contains = function(mx, my) {
 }
 
 GraphicPoint.prototype.draw = function(ctx) {
+    // draw the highlight
+    if (this.highlight) {
+        ctx.fillStyle = '#AA0000';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius + 2, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    // return to black
+    ctx.fillStyle = '#000000';
+
     // draw the point
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
@@ -27,6 +40,14 @@ GraphicPoint.prototype.draw = function(ctx) {
     // draw the name
     ctx.font = '20px sans-serif'
     ctx.fillText(this.name, this.x + 5, this.y + 5);
+}
+
+GraphicPoint.prototype.select = function() {
+    this.highlight = true;
+}
+
+GraphicPoint.prototype.deselect = function() {
+    this.highlight = false;
 }
 
 define(function() {return GraphicPoint;});
