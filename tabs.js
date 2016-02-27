@@ -14,7 +14,7 @@ function sel(s) {
 
 // for adding a theorem to the 'current theorems' tab
 function addTheorem() {
-    var currThms = sel(CURR_THEOREMS);
+    var currThms = sel("#curr-theorems-content");
     var newThm = document.createElement("div");
 
     newThm.name = "thm"; // TODO make this a unique identifier
