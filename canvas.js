@@ -19,35 +19,32 @@ function fitCanvas() {
     canvas.height = window.innerHeight * HEIGHT_PROPORTION;
 }
 
-// load graphic types
-var CanvasState, GraphicPoint, Point;
-require(
-    ['CanvasState', 'GraphicPoint', './Objects/Point'], function
-    (cs, gp, p) {
+// types
+var Point, LineSegment;
+var CanvasState, GraphicPoint, GraphicLineSegment;
+
+// import
+require(['Objects/Point','Objects/LineSegment'],
+    function(p, ls) {
+    Point = p;
+    LineSegment = ls;
+
+require(['CanvasState', 'GraphicPoint', 'GraphicLineSegment'],
+    function(cs, gp, gls) {
     CanvasState = cs;
     GraphicPoint = gp;
-    console.log(p);
-    Point = p;
+    GraphicLineSegment = gls;
 
-    // callback main
     main();
 });
-
-/*
-var GraphicLineSegment;
-require(['GraphicLineSegment'], function(mod) {
-    GraphicLineSegment = mod;
 });
-
-var GraphicTriangle;
-require(['GraphicTriangle'], function(mod) {
-    GraphicTriangle = mod;
-});
-*/
-
 
 // BEGIN PROOF BUILDER IMPLEMENTATION
 function main() {
     state = new CanvasState(canvas);
-    state.addShape(new GraphicPoint(40, 40, new Point("A")));
+    var A = new GraphicPoint(40, 40, new Point("A"));
+    var B = new GraphicPoint(200, 40, new Point("B"));
+    state.addShape(new GraphicLineSegment(A, B));
+    state.addShape(A);
+    state.addShape(B);
 }

@@ -13,4 +13,4 @@ var LineSegment = function(start, end) {
     this.end = end;
 }
 
-module.exports = LineSegment;
+define(function() { return LineSegment; });
