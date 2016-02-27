@@ -57,7 +57,27 @@ var midpointSplittingTheoremResults = function(lineSegment) {
 var midpointSplittingTheorem = new Theorem(midpointSplittingTheoremConditions, midpointSplittingTheoremResults);
 
 // TODO: ADD SSS POSTULATE AFTER TRIANGLE CONGRUENCE IS FINISHED.
-
+var SSSPostulateConditions = function(triange1,triangle2){
+	var num_congruentsides = 0;
+	for(var i=0;i<3;i++){
+		for(var j=0;j<3;j++){
+			if(congruences.search(triangle1.LineSegments[i],triangle2.LineSegments[j])){
+				num_congruentsides++;
+			}
+		}
+	}
+	if(num_congruentsides =3){
+		return true;
+	}else {
+		return false;
+	}
+}
+var SSSPostulateResults = function(triangle1,triangle2){
+	if(SSSPostulateConditions(triangle1,triangle2)){
+		TriangleCongruence.addTriangleCongruence(triangle1,triangle2);
+	}
+}
+var SSSPostulate = new Theorem(SSSPostulateConditions,SSSPostulateResults);
 
 // EXPORT FILE
 
