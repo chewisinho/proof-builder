@@ -3,7 +3,7 @@ Project for HackTech 2016.
 
 ## Points
 
-A Point is a geometrical point defined by a single letter.
+A `Point` is a geometrical point defined by a single letter.
 
 ```
 Point(Object):
@@ -13,7 +13,7 @@ Point(Object):
 
 ## Line Segments
 
-A line segment is defined by two Point objects.
+A `LineSegment` is defined by two `Point` objects.
 
 ```
 LineSegment(Object):
@@ -27,7 +27,7 @@ LineSegment(Object):
 
 ## Triangles
 
-A triangle is an object with three Point objects.
+A `Triangle` is an object with three `Point` objects.
 
 ```
 Triangle(Object)
@@ -43,7 +43,7 @@ Triangle(Object)
 
 ## Congruence
 
-A congruence is an equality relationship between two other objects.
+A `Congruence` is an equality relationship between two other objects.
 
 ```
 Congruence:
@@ -54,7 +54,7 @@ Congruence:
 
 ## Theorems
 
-Theorems apply their methods to objects that satisfy the conditions.
+A `Theorem` applies its method to objects that satisfy the conditions.
 
 ```
 Theorem:
@@ -67,24 +67,24 @@ Theorem:
 ```
 
 **Reflexive Property**
-  * Objects: LineSegment
+  * Objects: `LineSegment`
   * Conditions:
     * None
   * Results;
-    * Creates a Congruence with obj and obj
+    * Creates a `Congruence` with `obj` and `obj`
 
 **Midpoint Splitting Theorem**
-  * Objects: LineSegment
+  * Objects: `LineSegment`
   * Conditions:
-    * obj.midpoint is not null
+    * `obj.midpoint` is not `null`
   * Results:
-    * creates a Line Segment with obj.start and obj.midpoint
-    * creates a Line Segment with obj.midpoint and obj.end
-    * creates a Congruence with the two Line Segment objects
+    * creates a `Line Segment` with `obj.start` and `obj.midpoint`
+    * creates a `Line Segment` with `obj.midpoint` and `obj.end`
+    * creates a `Congruence` with the two `LineSegment` objects
 
 **SSS Postulate**
-  * Objects: Triangle, Triangle
+  * Objects: `Triangle`, `Triangle`
   * Conditions:
-    * for every side1 of obj1, there is a side2 of obj2 such that there is a Congruence object with side1 and side2
+    * for every `side1` of `obj1`, there is a `side2` of `obj2` such that there is a `Congruence` object with `side1` and `side2`
   * Results:
-    * creates a Congruence with the two Triangle objects
+    * creates a `Congruence` with the two `Triangle` objects
