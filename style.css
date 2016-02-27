@@ -1,0 +1,80 @@
+/* Normalize things */
+body, html {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
+    height: 100% !important;
+}
+
+/* left container pane */
+#theorem-pane {
+    background-color: #7DD4B4;
+    height: 100%;
+    width: 30%;
+    float: left;
+}
+
+/* right container pane */
+#builder-pane {
+    background-color: #3BB0A2;
+    height: 100%;
+    width: 70%;
+    float: right;
+}
+
+/* theorem tabs and their corresponding divs */
+#theorem-tabs button {
+    width:50%;
+    height:30px;
+    outline: none;
+    border: none;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    background: #ffffff;
+}
+
+#theorem-tabs button:hover {
+    background: #dddddd;
+    cursor: pointer;
+}
+
+#theorem-tabs button:first-child {
+    float:left;
+}
+
+#theorem-tabs button:last-child {
+    float:right;
+}
+
+.theorem-content {
+    height:90%;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+/* theorem list elements */
+.theorem-li {
+    padding: 10px 5px;
+    display:block;
+    width:100%;
+    background:yellow;
+    border-bottom:1px solid black;
+    cursor: pointer;
+}
+
+.theorem-li:hover {
+    background: #CCCC00;
+}
+
+
+#sel-thm {
+    background: red;
+}
+
+/* temp selector for the draggable div */
+#dragtest {
+    background: white;
+    width: 100px;
+    height: 100px;
+}
