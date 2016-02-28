@@ -111,7 +111,7 @@ body, html {
 
 canvas {
     position: fixed;
-    background: #FFFFFF;
+    /*background: #FFFFFF;*/
 }
 
 #proof-bench {
