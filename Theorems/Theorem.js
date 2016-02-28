@@ -81,15 +81,75 @@ SSSPostulate.checkConditions = function(triange1, triangle2) {
             }
         }
     }
-    return numCongruentSides === 3;
+    if(numCongruentSides === 3){
+    	return true;
+    } else {
+    	return false;
+    }
 };
 SSSPostulate.applyResults = function(triangle1, triangle2) {
-    TriangleCongruence.addTriangleCongruence(triangle1, triangle2);
-    self.triangle1 = triangle1;
-    self.triangle2 = triangle2;
+	if(SSSPostulate.checkConditions(triangle1,triangle2)){
+		TriangleCongruence.addTriangleCongruence(triangle1, triangle2);
+	}
+    this.triangle1 = triangle1;
+    this.triangle2 = triangle2;
 };
 SSSPostulate.contents = function() {
-    return "SSS Postulate: " + self.triangle1.toString() + " and " + self.triangle2.toString() + " are congruent.";
+    return "SSS Postulate: " + this.triangle1.toString() + " and " + this.triangle2.toString() + " are congruent.";
+}
+
+var ASAPostulate = new Theorem("ASA Postulate");
+ASAPostulate.checkConditions = function(triange1,triangle2) {
+	for(var ls1 in this.triangle1.lineSegments){
+		for(var ls2 in this.triangle2.lineSegments){
+			if(congruences.searchCongruences(ls1,ls2)||congruences.searchCongruences(ls2,ls1)){
+				this.num_angles=0;
+				for(var pt in ls1){
+					for(var pt2 in ls2){
+						if(congruences.searchCongruences(pt,pt2)){
+							this.num_angles+=1;
+						}	
+					}
+				}
+				if(this.num_angles===2){
+					return true;
+				}
+ 			}
+		}
+	}
+	return false;
+}
+ASAPostulate.applyResults = function(triangle1,triangle2) {
+	if(ASAPostulate.checkConditions(triangle1,triangle2)){
+		TriangleCongruence.addTriangleCongruence(triangle1,triangle2);
+	}
+	this.triangle1 = triangle1;
+	this.triangle2 = triangle2l;
+
+}
+ASAPostulate.contents = function() {
+	if(ASAPostulate.checkConditions){
+		return "ASA Postulate: " + this.triangle1.getname() + " and " + this.triangle2.getname() + " are congruent.";
+	} else{
+		return "ASA Postulate: " + this.triangle1.getname() + " and " + this.triangle2.getname() + " are not congruent.";
+	}
+}
+
+var TransitiveProperty = new Theorem("Transitive Property");
+TransitiveProperty.checkConditions = function (a,b,c){
+	if(congruences.searchCongruences(a,b) && congruences.searchCongruences(b,c)){
+		return true;
+	}
+}
+TransitiveProperty.applyResults = function (){
+	if(TransitiveProperty.checkConditions(a,b,c)){
+		if(!congruences.searchCongruences(a,c)){
+			congruences.addCongruence(a,c);
+		} 
+	}
+}
+TransitiveProperty.contents = function (){
+	return "Transitive Property:" + a.getname() + " and " + c.getname() + " are congruent.";
 }
 
 
