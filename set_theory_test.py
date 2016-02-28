@@ -179,4 +179,4 @@ if __name__ == "__main__":
     startState = ProofState([A, B, intersect], [])
     condition = lambda state: state.sets[0] in state.sets[2].superSets
     proof = GenerateProof(startState, condition)
-    proof.findProof()
+#    proof.findProof()
