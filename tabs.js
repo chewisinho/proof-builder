@@ -22,6 +22,8 @@ function loadProof(save) {
     congruences = save.congruences;
     triangleCongruences = save.triangleCongruences;
     proof = save;
+    refreshGivens();
+    addGoal();
 }
 
 /*
@@ -32,8 +34,6 @@ function loadTheorems() {
         addTheorem(theoremList[i]);
     };
     loadProof(makeExercise1());
-    refreshGivens();
-    addGoal();
 };
 
 // for adding a theorem to the 'current theorems' tab

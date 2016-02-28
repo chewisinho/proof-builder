@@ -35,7 +35,7 @@ var lineSegmentEquals, createLineSegment, case_insensitive_comp, createAngle,
     createTriangle, createPoint;
 var midpointSplittingTheorem, reflexiveProperty, SSSPostulate;
 var theoremList;
-var makeExercise1;
+var makeExercise1, makeExercise2;
 
 // Import
 require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'],
@@ -80,6 +80,7 @@ require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'],
                 SSSPostulate = s.sss;
 
                 makeExercise1 = s.mkex1;
+                makeExercise2 = s.mkex2;
 
                 theoremList = [midpointSplittingTheorem, reflexiveProperty, SSSPostulate];
                 main();
