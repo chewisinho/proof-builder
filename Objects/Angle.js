@@ -20,4 +20,8 @@ var Angle = function (ls1,ls2,cp){
 			}
 		}
 	}
+	this.name = cp.getname();
+	this.getname = function(){
+		return name;
+	}
 }

@@ -8,7 +8,7 @@ var Triangle = function(P1, P2, P3) {
 	this.angle.push(new Angle(this.lineSegments[1],this.lineSegments[2]),P3);
 	this.angle.push(new Angle(this.lineSegments[2],this.lineSegments[0]),P1);
 	this.triname = P1.getname() + P2.getname() + P3.getname();
-	this.gettriname = function(){
+	this.getname = function(){
 		return triname;
 	}
 }

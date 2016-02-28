@@ -96,8 +96,8 @@ SSSPostulate.contents = function() {
 
 var ASAPostulate = new Theorem("ASA Postulate");
 ASAPostulate.checkConditions = function(triange1,triangle2) {
-	for(var ls1 in triangle1.lineSegments){
-		for(var ls2 in triangle2.lineSegments){
+	for(var ls1 in this.triangle1.lineSegments){
+		for(var ls2 in this.triangle2.lineSegments){
 			if(congruences.searchCongruences(ls1,ls2)||congruences.searchCongruences(ls2,ls1)){
 				this.num_angles=0;
 				for(var pt in ls1){
@@ -130,6 +130,24 @@ ASAPostulate.contents = function() {
 		return "ASA Postulate: " + this.triangle1.getname() + " and " + this.triangle2.getname() + " are not congruent.";
 	}
 }
+
+var TransitiveProperty = new Theorem("Transitive Property");
+TransitiveProperty.checkConditions = function (a,b,c){
+	if(congruences.searchCongruences(a,b) && congruences.searchCongruences(b,c)){
+		return true;
+	}
+}
+TransitiveProperty.applyResults = function (){
+	if(TransitiveProperty.checkConditions(a,b,c)){
+		if(!congruences.searchCongruences(a,c)){
+			congruences.addCongruence(a,c);
+		} 
+	}
+}
+TransitiveProperty.contents = function (){
+	return "Transitive Property:" + a.getname() + " and " + c.getname() + " are congruent.";
+}
+
 
 // EXPORT FILE
 
