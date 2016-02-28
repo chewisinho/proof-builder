@@ -24,6 +24,7 @@ var Theorem = function(name) {
 
 
 var givens = new Array();
+var goals = new Array();
 var points = new Array();
 var lineSegments = new Array();
 var angles = new Array();
@@ -162,8 +163,6 @@ SSSPostulate.checkConditions = function(triangles) {
             };
         };
     };
-    console.log(this.sides1);
-    console.log(this.sides2);
     return this.sides1.length === 3;
 };
 SSSPostulate.applyResults = function(triangles) {
@@ -211,7 +210,7 @@ ASAPostulate.applyResults = function(triangle1,triangle2) {
 
 }
 ASAPostulate.contents = function() {
-	if(ASAPostulate.checkConditions){
+	if (ASAPostulate.checkConditions) {
 		return "ASA Postulate: " + this.triangle1.getname() + " and " + this.triangle2.getname() + " are congruent.";
 	} else{
 		return "ASA Postulate: " + this.triangle1.getname() + " and " + this.triangle2.getname() + " are not congruent.";
@@ -275,7 +274,7 @@ define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
 
         Thm: Theorem,
 
-        giv: givens, pts: points, lsgs: lineSegments, tris: triangles,
+        go: goals, giv: givens, pts: points, lsgs: lineSegments, tris: triangles,
         congrs: congruences, an: angles, tricon: triangleCongruences,
 
         lse: lineSegmentEquals, addl: createLineSegment, csc: case_insensitive_comp,

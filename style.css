@@ -105,6 +105,10 @@ body, html {
     float: right;
 }
 
+#builder-header #results-content {
+    padding: 10px;
+}
+
 canvas {
     position: fixed;
 }
