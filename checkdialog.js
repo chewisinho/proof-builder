@@ -12,8 +12,6 @@ var CheckDialog = function(id, options, callback) {
     this.overlay = null;
     this.callback = callback;
 
-    console.log('callback: ' + this.callback);
-
     this.overlay = document.createElement('div');
     this.overlay.setAttribute('id', this.id);
     this.overlay.setAttribute('style', OVERLAY_STYLE);

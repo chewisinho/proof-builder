@@ -28,17 +28,18 @@ function fitCanvas() {
 
 // Types
 var CanvasState, GraphicLineSegment, GraphicPoint;
-var LineSegment, Point, Theorem, Triangle;
+var Angle, LineSegment, Point, Theorem, Triangle;
 var congruences, lineSegments, points, triangles;
 var addLineSegment;
 var midpointSplittingTheorem, reflexiveProperty, SSSPostulate;
 var theoremList;
 
 // Import
-require(['Objects/Point'], function(p) {
+require(['Objects/Point', 'Objects/Angle'], function(p, a) {
     Point = p;
+    Angle = a;
 
-    require(['Objects/LineSegment', 'Objects/Triangle.js', 'Properties/Congruence.js'],
+    require(['Objects/LineSegment', 'Objects/Triangle', 'Properties/Congruence'],
         function(ls, tr, cong) {
         LineSegment = ls;
         Triangle = tr;
@@ -71,14 +72,23 @@ require(['Objects/Point'], function(p) {
     });
 });
 
+function createTriangle(p1, p2, p3) {
+    var tr = new Triangle(p1, p2, p3);
+    tr.lineSegments = [addLineSegment(p1, p2), addLineSegment(p2, p3), addLineSegment(p2, p3)];
+    tr.angles.push(new Angle(tr.lineSegments[0], tr.lineSegments[1]), tr.P2);
+    tr.angles.push(new Angle(tr.lineSegments[1], tr.lineSegments[2]), tr.P3);
+    tr.angles.push(new Angle(tr.lineSegments[2], tr.lineSegments[0]), tr.P1);
+    return tr;
+}
+
 // BEGIN PROOF BUILDER IMPLEMENTATION
 function main() {
     state = new CanvasState(canvas);
-    var A = new GraphicPoint(40, 40, new Point("A"));
-    var B = new GraphicPoint(200, 40, new Point("B"));
-    state.addShape(new GraphicLineSegment(A, B));
-    state.addShape(A);
-    state.addShape(B);
+    // var A = new GraphicPoint(40, 40, new Point("A"));
+    // var B = new GraphicPoint(200, 40, new Point("B"));
+    // state.addShape(new GraphicLineSegment(A, B));
+    // state.addShape(A);
+    // state.addShape(B);
 
     // BEGIN PROOF IMPLEMENTATION TESTING
 
@@ -87,15 +97,10 @@ function main() {
     var B = new Point('B');
     var C = new Point('C');
     var D = new Point('D');
-    var trABD = new Triangle(A, B, D);
-    var trCBD = new Triangle(C, B, D);
-    console.log(trABD);
-    console.log(trCBD);
-    // console.log(typeof addLineSegment);
+    var trABD = createTriangle(A, B, D);
+    var trCBD = createTriangle(C, B, D);
     var AC = addLineSegment(A, C)
     AC.midpoint = B;
-    console.log(AC);
-    console.log(AC.midpoint);
 
     loadTheorems();
 }

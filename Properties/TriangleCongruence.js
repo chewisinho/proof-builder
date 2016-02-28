@@ -1,5 +1,4 @@
 'use strict';
-var Congruence = require('./Congruence.js');
 
 var TriangleCongruence = function(tri1, tri2){
 	this.addTriangleCongruence = function(tri1,tri2){
@@ -8,4 +7,6 @@ var TriangleCongruence = function(tri1, tri2){
 	}
 };
 
-module.exports = TriangleCongruence;
+define(['./Congruence'], function() {
+	return TriangleCongruence;
+});

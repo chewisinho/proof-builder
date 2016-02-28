@@ -5,6 +5,7 @@
  */
 
 var selectedThm = null; // the currently selected theorem (DOM element)
+var box = null; // the selection box
 
 /*
  * Loads the theorems into the theorem sidebar
@@ -38,6 +39,31 @@ function addTheorem(thm) {
     currThms.appendChild(newThm);
 }
 
+function checkInputs(inputs, numInputs, objList, theorem) {
+
+    filteredInputs = [];
+    for (var i = 0; i < inputs.length; i += 1) {
+        if (inputs[i])
+            filteredInputs.push(i);
+    };
+    if (!(filteredInputs.length === numInputs)) {
+        alert("Not the right number of inputs for this theorem!");
+    } else {
+        var objs = [];
+        for (var i = 0; i < numInputs; i += 1) {
+            objs.push(objList[filteredInputs[i]]);
+        }
+        if (!(theorem.checkConditions(objs))) {
+            alert("The theorem doesn't apply here!");
+        } else {
+            theorem.applyResults(objs);
+            addStep(theorem);
+        }
+    };
+    box.remove();
+
+}
+
 /*
  * Applies the theorem
  */
@@ -53,9 +79,9 @@ function applyTheorem(theorem) {
     }
 
     var options = thm.getInput()[0];
-    console.log("First option " + options[0]);
     var numOptions = thm.getInput()[1];
-    var box = new CheckDialog('selectionBox', options, []);
+    box = new CheckDialog('selectionBox', options,
+        function(inputs) { checkInputs(inputs, numOptions, options, thm) });
     box.open();
 
 }
@@ -67,7 +93,7 @@ function addStep(step) {
     var currSteps = sel("#curr-steps");
     var newStep = document.createElement('div');
 
-    newStep.innerHTML = step;
+    newStep.innerHTML = step.contents();
     newStep.setAttribute('class', 'step-li');
 
     currSteps.appendChild(newStep);
@@ -97,8 +123,6 @@ function setHandlers() {
     }
 
     var proofArea = sel("#proof-bench");
-    console.log("Reached this area! Proof area is...");
-    console.log(proofArea);
 
     // clicking on the build area will trigger the
     // applyTheorem() method of the selected theorem
