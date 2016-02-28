@@ -4,6 +4,7 @@ var Point;
 var LineSegment;
 var Triangle;
 var Congruence;
+var TriangleCongruence;
 
 
 // MAIN THEOREM CLASS
@@ -25,6 +26,12 @@ var points = new Array();
 var lineSegments = new Array();
 var triangles = new Array();
 var congruences = new Congruence();
+var triangleCongruences = new TriangleCongruence();
+
+function lineSegmentEquals(segment1, segment2) {
+    return ((segment1.start === segment1.start && segment1.end === segment2.end) ||
+        (segment1.start === segment1.end && segment1.end === segment2.start));
+}
 
 var addLineSegment = function(pt1, pt2) {
     for (var i = 0; i < lineSegments.length; i += 1) {
@@ -37,7 +44,6 @@ var addLineSegment = function(pt1, pt2) {
     lineSegments.push(newLineSegment);
     return newLineSegment;
 }
-
 
 function case_insensitive_comp(strA, strB) {
     return strA.toLowerCase().localeCompare(strB.toLowerCase());
@@ -67,16 +73,16 @@ function createTriangle(p1, p2, p3) {
 }
 
 function createPoint(P1) {
-    for (int i = 0; i < points.length; i++) {
+    for (var i = 0; i < points.length; i += 1) {
         if (P1 === points[i].toString()) {
             return points[i];
         } else {
             var pt = new Point(P1);
             points.push(pt);
             return  pt;
-        }
-    }
-}
+        };
+    };
+};
 
 
 // LIST OF THEOREMS
@@ -114,31 +120,35 @@ midpointSplittingTheorem.contents = function() {
 };
 midpointSplittingTheorem.getInput = function() {
     return [lineSegments, 1];
-}
+};
 
 var SSSPostulate = new Theorem("SSS Postulate");
-SSSPostulate.checkConditions = function(triange1, triangle2) {
-    var numCongruentSides = 0;
-    for(var i = 0; i < 3; i += 1) {
-        for(var j = 0; j < 3; j += 1) {
-            if (congruences.search(triangle1.lineSegments[i], triangle2.lineSegments[j])) {
-                numCongruentSides += 1;
-            }
-        }
-    }
-    return numCongruentSides === 3;
+SSSPostulate.checkConditions = function(triangles) {
+    self.sides1 = [];
+    self.sides2 = [];
+    for (var i = 0; i < 3; i += 1) {
+        var side1 = triangles[0].lineSegments[i];
+        for (var j = 0; j < 3; j += 1) {
+            var side2 = triangles[1].lineSegments[j];
+            if (lineSegmentEquals(side1, side2)) {
+                self.sides1.push(side1);
+                self.sides2.push(side2);
+            };
+        };
+    };
+    return side1.length === 3;
 };
-SSSPostulate.applyResults = function(triangle1, triangle2) {
-    TriangleCongruence.addTriangleCongruence(triangle1, triangle2);
-    self.triangle1 = triangle1;
-    self.triangle2 = triangle2;
+SSSPostulate.applyResults = function(triangles) {
+    triangleCongruences.addSSSCongruence(triangles[0], triangles[1], self.sides1, self.sides2);
+    this.triangle1 = triangles[0];
+    this.triangle2 = triangles[1];
 };
 SSSPostulate.contents = function() {
-    return "SSS Postulate: " + self.triangle1.toString() + " and " + self.triangle2.toString() + " are congruent.";
+    return "SSS Postulate: " + this.triangle1.toString() + " and " + this.triangle2.toString() + " are congruent.";
 };
 SSSPostulate.getInput = function() {
     return [triangles, 2];
-}
+};
 
 var ASAPostulate = new Theorem("ASA Postulate");
 ASAPostulate.checkConditions = function(triange1,triangle2) {
@@ -216,13 +226,15 @@ VerticleAngles.contents = function(a1, a2) {
 
 // EXPORT FILE
 
-define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle', '../Properties/Congruence'],
-    function(Pt, Ls, Tri, Con) {
+define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
+    '../Properties/Congruence', '../Properties/TriangleCongruence'],
+    function(Pt, Ls, Tri, Con, TriCon) {
 
         Point = Pt;
         LineSegment = Ls;
         Triangle = Tri;
         Congruence = Con;
+        TriangleCongruence = TriCon;
 
         return {
 
