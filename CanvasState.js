@@ -86,8 +86,8 @@ var CanvasState = function(canvas) {
         if (myState.dragging) {
             var mouse = myState.getMouse(e);
 
-            myState.selection.x = mouse.x - myState.dragoffx;
-            myState.selection.y = mouse.y - myState.dragoffy;
+            myState.selection.moveTo(mouse.x - myState.dragoffx,
+                                     mouse.y - myState.dragoffy);
             myState.valid = false;
         }
     }, true);

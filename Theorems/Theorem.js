@@ -4,6 +4,7 @@ var Point;
 var LineSegment;
 var Triangle;
 var Congruence;
+var TriangleCongruence;
 
 
 // MAIN THEOREM CLASS
@@ -23,10 +24,21 @@ var Theorem = function(name) {
 
 var points = new Array();
 var lineSegments = new Array();
+var angles = new Array();
 var triangles = new Array();
 var congruences = new Congruence();
+var triangleCongruences = new TriangleCongruence();
 
-var addLineSegment = function(pt1, pt2) {
+function lineSegmentEquals(segment1, segment2) {
+    var bool = ((segment1.start === segment1.start && segment1.end === segment2.end) ||
+        (segment1.start === segment1.end && segment1.end === segment2.start));
+    if (bool) {
+        console.log("EQUALITY: " + segment1.toString() + " " + segment2.toString());
+    }
+    return bool;
+}
+
+var createLineSegment = function(pt1, pt2) {
     for (var i = 0; i < lineSegments.length; i += 1) {
         if ((lineSegments[i].start === pt1 && lineSegments[i].end === pt2) ||
             (lineSegments[i].start === pt2 && lineSegments[i].end === pt1)) {
@@ -37,6 +49,58 @@ var addLineSegment = function(pt1, pt2) {
     lineSegments.push(newLineSegment);
     return newLineSegment;
 }
+
+function case_insensitive_comp(strA, strB) {
+    return strA.toLowerCase().localeCompare(strB.toLowerCase());
+}
+
+function createAngle(ls1,ls2,cp){
+    this.name = cp.toString();
+    this.name2 = Angle.findcp(ls1,ls2);
+    for(var i=0;i<angles.length;i++){
+        if(name === angles[i].toString() || name2 === angles[i].toString()){
+            return angles[i];
+        }else{
+            var a1 = new Angle(ls1,ls2,cp);
+            angles.push(a1);
+            return a1;
+        }
+    }
+}
+
+function createTriangle(p1, p2, p3) {
+    // Check if the Triangle already exists.
+    var name = [p1.toString(), p2.toString(), p3.toString()];
+    name = name.sort(case_insensitive_comp);
+    name = name.join("");
+    for (var i = 0; i < triangles.length; i += 1) {
+        var tName = triangles[i].name;
+        tName = tName.split("");
+        tName.sort(case_insensitive_comp);
+        tName.join("");
+        if (name === tName) {
+            return triangles[i];
+        };
+    };
+    var tr = new Triangle(p1, p2, p3);
+    tr.lineSegments = [createLineSegment(p1, p2), createLineSegment(p2, p3), createLineSegment(p3, p1)];
+    tr.angles.push(new Angle(tr.lineSegments[0], tr.lineSegments[1]), tr.P2);
+    tr.angles.push(new Angle(tr.lineSegments[1], tr.lineSegments[2]), tr.P3);
+    tr.angles.push(new Angle(tr.lineSegments[2], tr.lineSegments[0]), tr.P1);
+    triangles.push(tr);
+    return tr;
+}
+
+function createPoint(P1) {
+    for (var i = 0; i < points.length; i += 1) {
+        if (P1 === points[i].toString()) {
+            return points[i];
+        };
+    };
+    var pt = new Point(P1);
+    points.push(pt);
+    return pt;
+};
 
 
 // LIST OF THEOREMS
@@ -64,8 +128,8 @@ midpointSplittingTheorem.checkConditions = function(lines) {
 midpointSplittingTheorem.applyResults = function(lines) {
     var lineSegment = lines[0];
     this.lineSegment = lines[0];
-    this.ls1 = addLineSegment(lineSegment.start, lineSegment.midpoint);
-    this.ls2 = addLineSegment(lineSegment.midpoint, lineSegment.end);
+    this.ls1 = createLineSegment(lineSegment.start, lineSegment.midpoint);
+    this.ls2 = createLineSegment(lineSegment.midpoint, lineSegment.end);
     congruences.addCongruence(this.ls1, this.ls2);
 };
 midpointSplittingTheorem.contents = function() {
@@ -74,31 +138,37 @@ midpointSplittingTheorem.contents = function() {
 };
 midpointSplittingTheorem.getInput = function() {
     return [lineSegments, 1];
-}
+};
 
 var SSSPostulate = new Theorem("SSS Postulate");
-SSSPostulate.checkConditions = function(triange1, triangle2) {
-    var numCongruentSides = 0;
-    for(var i = 0; i < 3; i += 1) {
-        for(var j = 0; j < 3; j += 1) {
-            if (congruences.search(triangle1.lineSegments[i], triangle2.lineSegments[j])) {
-                numCongruentSides += 1;
-            }
-        }
-    }
-    return numCongruentSides === 3;
+SSSPostulate.checkConditions = function(triangles) {
+    this.sides1 = [];
+    this.sides2 = [];
+    for (var i = 0; i < 3; i += 1) {
+        var side1 = triangles[0].lineSegments[i];
+        for (var j = 0; j < 3; j += 1) {
+            var side2 = triangles[1].lineSegments[j];
+            if (congruences.searchCongruences(side1, side2)) {
+                this.sides1.push(side1);
+                this.sides2.push(side2);
+            };
+        };
+    };
+    console.log(this.sides1);
+    console.log(this.sides2);
+    return this.sides1.length === 3;
 };
-SSSPostulate.applyResults = function(triangle1, triangle2) {
-    TriangleCongruence.addTriangleCongruence(triangle1, triangle2);
-    self.triangle1 = triangle1;
-    self.triangle2 = triangle2;
+SSSPostulate.applyResults = function(triangles) {
+    triangleCongruences.addSSSCongruence(triangles[0], triangles[1], this.sides1, this.sides2);
+    this.triangle1 = triangles[0];
+    this.triangle2 = triangles[1];
 };
 SSSPostulate.contents = function() {
-    return "SSS Postulate: " + self.triangle1.toString() + " and " + self.triangle2.toString() + " are congruent.";
+    return "SSS Postulate: " + this.triangle1.toString() + " and " + this.triangle2.toString() + " are congruent.";
 };
 SSSPostulate.getInput = function() {
     return [triangles, 2];
-}
+};
 
 var ASAPostulate = new Theorem("ASA Postulate");
 ASAPostulate.checkConditions = function(triange1,triangle2) {
@@ -123,7 +193,7 @@ ASAPostulate.checkConditions = function(triange1,triangle2) {
 }
 ASAPostulate.applyResults = function(triangle1,triangle2) {
 	if(ASAPostulate.checkConditions(triangle1,triangle2)){
-		TriangleCongruence.addTriangleCongruence(triangle1,triangle2);
+		// triangleCongruence.addTriangleCongruence(triangle1,triangle2);
 	}
 	this.triangle1 = triangle1;
 	this.triangle2 = triangle2l;
@@ -176,25 +246,27 @@ VerticleAngles.contents = function(a1, a2) {
 
 // EXPORT FILE
 
-define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle', '../Properties/Congruence'],
-    function(Pt, Ls, Tri, Con) {
+define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
+    '../Properties/Congruence', '../Properties/TriangleCongruence'],
+    function(Pt, Ls, Tri, Con, TriCon) {
 
-        Point = Pt;
-        LineSegment = Ls;
-        Triangle = Tri;
-        Congruence = Con;
+    Point = Pt;
+    LineSegment = Ls;
+    Triangle = Tri;
+    Congruence = Con;
+    TriangleCongruence = TriCon;
 
-        return {
+    return {
 
-            Thm: Theorem,
+        Thm: Theorem,
 
-            pts: points, lsgs: lineSegments, tris: triangles, congrs: congruences,
+        pts: points, lsgs: lineSegments, tris: triangles, congrs: congruences, an: angles, tricon: triangleCongruences,
 
-            addl: addLineSegment,
+        lse: lineSegmentEquals, addl: createLineSegment, csc: case_insensitive_comp, ca: createAngle,
+        ct: createTriangle, cp: createPoint,
 
-            reflP: reflexiveProperty, mst: midpointSplittingTheorem, sss: SSSPostulate
+        reflP: reflexiveProperty, mst: midpointSplittingTheorem, sss: SSSPostulate
 
-        };
+    };
 
-    }
-);
+});

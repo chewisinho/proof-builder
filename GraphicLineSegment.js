@@ -8,7 +8,12 @@
 var GraphicLineSegment = function(pt1, pt2) {
     this.pt1 = pt1;
     this.pt2 = pt2;
-    this.thickness = 4;
+    this.x = pt1.x;
+    this.y = pt1.y;
+    this.pointoffx = this.pt2.x - this.pt1.x;
+    this.pointoffy = this.pt2.y - this.pt1.y;
+
+    this.thickness = 5;
     this.highlight = false;
 }
 
@@ -44,6 +49,17 @@ GraphicLineSegment.prototype.draw = function(ctx) {
     ctx.stroke();
 }
 
+GraphicLineSegment.prototype.moveTo = function(x, y) {
+    this.pointoffx = this.pt2.x - this.pt1.x;
+    this.pointoffy = this.pt2.y - this.pt1.y;
+    this.x = x;
+    this.y = y;
+
+    this.pt1.moveTo(x, y);
+    this.pt2.moveTo(this.pt1.x + this.pointoffx,
+                    this.pt1.y + this.pointoffy);
+}
+
 GraphicLineSegment.prototype.select = function() {
     this.highlight = true;
 }
@@ -52,6 +68,7 @@ GraphicLineSegment.prototype.deselect = function() {
     this.highlight = false;
 }
 
+// honestly this is so cryptic i don't even know...
 function nearestLinePoint(lp1, lp2, x, y) {
     var lerp=function(a,b,x){ return(a+x*(b-a)); };
     var dx = lp2.x - lp1.x;

@@ -12,4 +12,4 @@ var LineSegment = function(start, end) {
     };
 }
 
-define(['./Point'], function() { return LineSegment; });
+define(function() { return LineSegment; });

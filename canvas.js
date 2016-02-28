@@ -28,16 +28,18 @@ function fitCanvas() {
 
 // Types
 var CanvasState, GraphicLineSegment, GraphicPoint;
-var Angle, LineSegment, Point, Theorem, Triangle;
-var congruences, lineSegments, points, triangles;
-var addLineSegment;
+var Angle, LineSegment, Point, Theorem, Triangle, TriangleCongruence;
+var congruences, lineSegments, points, triangles, angles, triangleCongruences;
+var lineSegmentEquals, createLineSegment, case_insensitive_comp, createAngle,
+    createTriangle, createPoint;
 var midpointSplittingTheorem, reflexiveProperty, SSSPostulate;
 var theoremList;
 
 // Import
-require(['Objects/Point', 'Objects/Angle'], function(p, a) {
+require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'], function(p, a, t) {
     Point = p;
     Angle = a;
+    TriangleCongruence = t;
 
     require(['Objects/LineSegment', 'Objects/Triangle', 'Properties/Congruence'],
         function(ls, tr, cong) {
@@ -58,8 +60,15 @@ require(['Objects/Point', 'Objects/Angle'], function(p, a) {
                 lineSegments = s.lsgs;
                 triangles = s.tris;
                 congruences = s.congrs;
+                angles = s.an;
+                triangleCongruences = s.tricon;
 
-                addLineSegment = s.addl;
+                lineSegmentEquals = s.lse;
+                createLineSegment = s.addl;
+                case_insensitive_comp = s.csc;
+                createAngle = s.ca;
+                createTriangle = s.ct;
+                createPoint = s.cp;
 
                 reflexiveProperty = s.reflP;
                 midpointSplittingTheorem = s.mst;
@@ -72,16 +81,7 @@ require(['Objects/Point', 'Objects/Angle'], function(p, a) {
     });
 });
 
-function createTriangle(p1, p2, p3) {
-    var tr = new Triangle(p1, p2, p3);
-    tr.lineSegments = [addLineSegment(p1, p2), addLineSegment(p2, p3), addLineSegment(p2, p3)];
-    tr.angles.push(new Angle(tr.lineSegments[0], tr.lineSegments[1]), tr.P2);
-    tr.angles.push(new Angle(tr.lineSegments[1], tr.lineSegments[2]), tr.P3);
-    tr.angles.push(new Angle(tr.lineSegments[2], tr.lineSegments[0]), tr.P1);
-    return tr;
-}
 
-// BEGIN PROOF BUILDER IMPLEMENTATION
 function main() {
     state = new CanvasState(canvas);
     // var A = new GraphicPoint(40, 40, new Point("A"));
@@ -93,14 +93,15 @@ function main() {
     // BEGIN PROOF IMPLEMENTATION TESTING
 
     // GIVEN INFORMATION
-    var A = new Point('A');
-    var B = new Point('B');
-    var C = new Point('C');
-    var D = new Point('D');
+    var A = createPoint('A');
+    var B = createPoint('B');
+    var C = createPoint('C');
+    var D = createPoint('D');
     var trABD = createTriangle(A, B, D);
     var trCBD = createTriangle(C, B, D);
-    var AC = addLineSegment(A, C)
+    var AC = createLineSegment(A, C)
     AC.midpoint = B;
+    congruences.addCongruence(createLineSegment(A, D), createLineSegment(C, D));
 
     loadTheorems();
 }

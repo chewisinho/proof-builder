@@ -87,13 +87,17 @@ body, html {
 
 #builder-header h3 {
     color: #dddddd;
-    margin-left: 20px;
+    margin: 10px 0 0 10px;
     font-weight: bold;
 }
 
 #builder-header #givens {
     background:#33839E;
     float: left;
+}
+
+#builder-header #given-content {
+    padding: 10px;
 }
 
 #builder-header #results {
