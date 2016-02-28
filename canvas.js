@@ -81,6 +81,31 @@ function createTriangle(p1, p2, p3) {
     return tr;
 }
 
+function createPoint(P1){
+    for(int i=0; i<points.length;i++){
+        if(P1 === points[i].toString()){
+                return points[i];
+        } else{
+             var pt = new Point(P1);
+             points.push(pt);
+             return  pt;
+        }
+    }
+}
+
+function createLineSegment(p1,p2) {
+    var name = p1+p2, name2 = p2+p1;
+    for(int i=0; i<lineSegments.length;i++) {
+        if(name === lineSegments[i].toString() || name2 === lineSegments[i].toString()){
+            return lineSegments[i];
+        } else{
+            var lS = new LineSegment(p1.p2);
+            lineSegments.push(lS);
+            return lS;
+        }
+    }
+}
+
 // BEGIN PROOF BUILDER IMPLEMENTATION
 function main() {
     state = new CanvasState(canvas);
