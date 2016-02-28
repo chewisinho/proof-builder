@@ -29,7 +29,7 @@ function fitCanvas() {
 // Types
 var CanvasState, GraphicLineSegment, GraphicPoint;
 var Angle, LineSegment, Point, Theorem, Triangle, TriangleCongruence;
-var congruences, givens, lineSegments, points, triangles, angles,
+var congruences, givens, goals, lineSegments, points, triangles, angles,
     triangleCongruences;
 var lineSegmentEquals, createLineSegment, case_insensitive_comp, createAngle,
     createTriangle, createPoint;
@@ -59,6 +59,7 @@ require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'],
                 Theorem = s.Thm;
 
                 givens = s.giv;
+                goals = s.go;
                 points = s.pts;
                 lineSegments = s.lsgs;
                 triangles = s.tris;
@@ -83,6 +84,8 @@ require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'],
         });
     });
 });
+
+var proofComplete;
 
 function main() {
     state = new CanvasState(canvas);
@@ -109,9 +112,15 @@ function main() {
     var startCong = new Given(AD, CD);
     startCong.generate('congruent');
     givens.push(startCong);
-    var AC = createLineSegment(A, C)
+    var AC = createLineSegment(A, C);
     AC.midpoint = B;
     givens.push(new MidpointGiven(AC, B));
+    proofComplete = function() {
+        return triangleCongruences.searchCongruences(trABD, trCBD);
+    };
+    var goal = new Given(trABD, trCBD);
+    goal.generate('congruent');
+    goals.push(goal);
 
     loadTheorems();
-}
+};

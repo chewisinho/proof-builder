@@ -3,7 +3,8 @@
 function TriangleCongruence() {
 	this.congruences = [];
 	this.searchCongruences = function(obj1, obj2) {
-		for (var cong in this.congruences) {
+		for (var c = 0; c < this.congruences.length; c += 1) {
+			var cong = this.congruences[c];
 			if ((cong[0] === obj1 && cong[1] === obj2) ||
 				(cong[0] === obj2 && cong[1] === obj1)) {
 				return true;

@@ -15,6 +15,7 @@ function loadTheorems() {
         addTheorem(theoremList[i]);
     };
     refreshGivens();
+    addGoal();
 };
 
 // for adding a theorem to the 'current theorems' tab
@@ -102,6 +103,16 @@ function addStep(step) {
 }
 
 /*
+ * Adds the goal
+ */
+function addGoal() {
+    var goalPane = sel('#results-content');
+    for (var i = 0; i < goals.length; i += 1) {
+        goalPane.innerHTML += goals[i].toString() + '<br>';
+    };
+};
+
+/*
  * Refreshes the Given pane if there are new things proven
  */
 function refreshGivens() {
@@ -109,6 +120,9 @@ function refreshGivens() {
     givenPane.innerHTML = '';
     for (var i = 0; i < givens.length; i += 1) {
         givenPane.innerHTML += givens[i].toString() + '<br>';
+    };
+    if (proofComplete()) {
+        alert("Congratulations, you have proved the theorem!");
     };
 };
 
