@@ -225,7 +225,7 @@ function saveCurrentProof() {
 
     // load all steps into steps Array
     for (var i = 0; i < currSteps.length; i++) {
-        steps.push(currSteps[i]);
+        steps.push(currSteps[i].innerHTML);
     }
 
     var newSave = new Save(givens, goals, steps, points, lineSegments,
