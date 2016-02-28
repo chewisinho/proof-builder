@@ -156,6 +156,37 @@ function setHandlers() {
     proofArea.onclick = function() {
         applyTheorem(selectedThm);
     }
+
+    setProveTheoremHandlers();
 }
 
 setHandlers();
+
+// PROVE THEOREMS TAB -- SAVES //
+var saves = new Array(); // idk?
+
+function saveCurrentProof() {
+    var currSteps = sel('#curr-steps').childNodes;
+    var steps = new Array(); // to hold the steps
+
+    // load all steps into steps Array
+    for (var i = 0; i < currSteps.length; i++) {
+        steps.push(currSteps[i]);
+    }
+
+    addSave(new Save(givens, goals, steps, points, lineSegments,
+                     angles, triangles, congruences, triangleCongruences));
+}
+
+function addSave(save) {
+    saves.push(save);
+    console.log("Saved!");
+    console.log(saves);
+}
+
+function setProveTheoremHandlers() {
+    // TODO continue
+    var saveButton = document.createElement('button');
+    saveButton.id = 'save';
+
+}
