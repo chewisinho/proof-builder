@@ -33,6 +33,7 @@ function setImage(img) {
     var frame = sel('#results-content');
     if (frame && img) {
         img.style.marginTop = '10px';
+        console.log('loading ' + img);
         frame.appendChild(img);
     }
 }
@@ -226,12 +227,13 @@ function saveCurrentProof() {
 
     // load all steps into steps Array
     for (var i = 0; i < currSteps.length; i++) {
-        steps.push(currSteps[i]);
+        steps.push(currSteps[i].innerHTML);
     }
 
     var newSave = new Save(givens, goals, steps, points, lineSegments,
                     angles, triangles, congruences, triangleCongruences);
     newSave.name = proof.name;
+    newSave.image = sel('#results-content').childNodes[2] || undefined;
     newSave.proofComplete = proof.proofComplete;
     if (proof.hasOwnProperty('complete')) {
         newSave.complete = true;
