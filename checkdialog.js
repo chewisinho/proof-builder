@@ -43,8 +43,10 @@ CheckDialog.prototype.readInput = function(callback) {
     var inputs = form.childNodes;
     var result = [];
     for (var i = 0; i < inputs.length; i++) {
-        if (inputs[i].checked !== undefined)
-            result.push(inputs[i].checked);
+        var box = inputs[i].childNodes[0];
+        console.log(box);
+        if (box.checked !== undefined)
+            result.push(box.checked);
     }
 
     callback(result);
