@@ -1,5 +1,10 @@
 const WIDTH_PROPORTION = 0.7;   // Proportions of canvas to the window frame
-const HEIGHT_PROPORTION = 0.95;
+const HEIGHT_PROPORTION = 0.40;
+
+// gets element by id/class
+function sel(s) {
+    return document.querySelector(s);
+}
 
 var state; // The canvas state
 
@@ -27,7 +32,7 @@ var LineSegment, Point, Theorem, Triangle;
 var congruences, lineSegments, points, triangles;
 var addLineSegment;
 var midpointSplittingTheorem, reflexiveProperty, SSSPostulate;
-var theoremList = [midpointSplittingTheorem, reflexiveProperty, SSSPostulate];
+var theoremList;
 
 // Import
 require(['Objects/Point'], function(p) {
@@ -59,6 +64,7 @@ require(['Objects/Point'], function(p) {
                 midpointSplittingTheorem = s.mst;
                 SSSPostulate = s.sss;
 
+                theoremList = [midpointSplittingTheorem, reflexiveProperty, SSSPostulate];
                 main();
             });
         });
@@ -75,7 +81,7 @@ function main() {
     state.addShape(B);
 
     // BEGIN PROOF IMPLEMENTATION TESTING
-    
+
     // GIVEN INFORMATION
     var A = new Point('A');
     var B = new Point('B');
@@ -90,5 +96,6 @@ function main() {
     AC.midpoint = B;
     console.log(AC);
     console.log(AC.midpoint);
-    
+
+    loadTheorems();
 }
