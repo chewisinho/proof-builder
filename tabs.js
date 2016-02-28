@@ -61,8 +61,8 @@ function addTheorem(thm) {
         if (selectedThm) sel("#sel-thm").id = "";
 
         // apply selected div id to the one clicked on
-        selectedThm = newThm.innerHTML;
-        newThm.id = "sel-thm";
+        selectedThm = this.innerHTML;
+        this.id = "sel-thm";
     }
 
     // set class to apply CSS, add to the div
@@ -72,11 +72,13 @@ function addTheorem(thm) {
 
 function checkInputs(inputs, numInputs, objList, theorem) {
 
+    console.log(inputs);
     filteredInputs = [];
     for (var i = 0; i < inputs.length; i += 1) {
         if (inputs[i])
             filteredInputs.push(i);
     };
+    console.log(filteredInputs);
     if (!(filteredInputs.length === numInputs)) {
         alert("Not the right number of inputs for this theorem!");
     } else {

@@ -415,6 +415,10 @@ function makeExercise2() {
         return this.triangleCongruences.searchCongruences(trRST, trRTS);
     };
 
+    var img = new Image();
+    img.src = './resources/ex_2.png';
+    save.image = img;
+
     return save;
 
 }
