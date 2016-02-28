@@ -17,6 +17,17 @@ function TriangleCongruence() {
 			this.congruences.push([tri1, tri2, sides1, sides2, 'SSS']);
 		};
 	};
+	/*this.addASACongruences(tri1,tri2,sides1,sides2){
+		if(!this.searchCongruences(tri1,tri2)) {
+			this.congruences.push([])
+		}
+	}
+	*/
+	this.addSASCongruence = function(tri1,tri2,sides1,sides2){
+		if(!this.searchCongruences(tri1,tri2)){
+			this.congruences.push([tri1,tri2,sides1,sides2,'SAS']);
+		}
+	}
 };
 
 define(function() {

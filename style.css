@@ -76,7 +76,7 @@ body, html {
 /* header for the builder pane */
 #builder-header {
     background: white;
-    height: 15%;
+    height: 45%;
     width: 100%;
 }
 
@@ -111,6 +111,7 @@ body, html {
 
 canvas {
     position: fixed;
+    background: #FFFFFF;
 }
 
 #proof-bench {
@@ -119,7 +120,7 @@ canvas {
     display:block;
     bottom: 0;
     width:inherit;
-    height:45%;
+    height:50%;
 
     cursor: pointer;
 }
