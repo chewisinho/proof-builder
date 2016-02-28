@@ -1,7 +1,7 @@
 'use strict';
 
 var Angle = function (ls1,ls2,cp){
-	this.lineSegments = new [ls1,ls2];
+	this.lineSegments = [ls1,ls2];
 	this.centralPoint = cp || function(ls1,ls2){
 		for(var point in ls1){
 			if(ls1[point]===ls2[0]){

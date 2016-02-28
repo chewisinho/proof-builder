@@ -98,7 +98,7 @@ var ASAPostulate = new Theorem("ASA Postulate");
 ASAPostulate.checkConditions = function(triange1,triangle2) {
 	for(var ls1 in this.triangle1.lineSegments){
 		for(var ls2 in this.triangle2.lineSegments){
-			if(congruences.searchCongruences(ls1,ls2)||congruences.searchCongruences(ls2,ls1)){
+			if(congruences.searchCongruences(ls1,ls2)){
 				this.num_angles=0;
 				for(var pt in ls1){
 					for(var pt2 in ls2){
@@ -146,6 +146,25 @@ TransitiveProperty.applyResults = function (){
 }
 TransitiveProperty.contents = function (){
 	return "Transitive Property:" + a.getname() + " and " + c.getname() + " are congruent.";
+}
+
+//Trying something out....So yeah.
+var VerticleAngles = new Theorem("Verticle Angles");
+VerticleAngles.checkConditions = function (a1,a2){
+    if(AngleCongruence.verticleAngles(a1,a2)){
+        return true;
+    }else {
+        retun false;
+    }
+}
+VerticleAngles.applyResults = function (a1,a2){
+    if(VerticleAngles.checkConditions(a1,a2)){
+        AngleCongruence.addAngleCongruence(a1,a2);
+        return VerticleAngles.contents(a1,a2);
+    }
+}
+VerticleAngles.contents = function (a1,a2){
+    return "Verticle Angles: " a1.getname() + " and " + a2.getname() + " are congruent";
 }
 
 
