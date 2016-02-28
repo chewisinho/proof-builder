@@ -52,8 +52,21 @@ function applyTheorem(theorem) {
     console.log(thm);
     // look here sinho
     if (selectedThm)
-        sel("#proof-bench").innerHTML = selectedThm;
+        addStep(selectedThm);
 
+}
+
+/*
+ * Adds a step to the proof bench
+ */
+function addStep(step) {
+    var currSteps = sel("#curr-steps");
+    var newStep = document.createElement('div');
+
+    newStep.innerHTML = step;
+    newStep.setAttribute('class', 'step-li');
+
+    currSteps.appendChild(newStep);
 }
 
 /*
@@ -61,29 +74,27 @@ function applyTheorem(theorem) {
  * selected, and so that the program knows what is selected
  */
 function setHandlers() {
-    // load the doc objects
-    var currThmsButton = sel("button#curr-theorems");
-    var builtThmsButton = sel("button#built-theorems");
-    var currThms = sel("#curr-theorems-content");
-    var builtThms = sel("#built-theorems-content");
-
-    var proofArea = sel("#proof-bench");
-    console.log("Reached this area! Proof area is...");
-    console.log(proofArea);
-
     // ASSIGN HANDLERS:
 
+    var currThmsButton = sel("button#curr-theorems");
+    var currThms = sel("#curr-theorems-content");
     // if clicking current thms button, toggle
     currThmsButton.onclick = function() {
         currThms.style.display = "block";
         builtThms.style.display = "none";
     }
 
+    var builtThmsButton = sel("button#built-theorems");
+    var builtThms = sel("#built-theorems-content");
     // if clicking built thms button, toggle
     builtThmsButton.onclick = function() {
         currThms.style.display = "none";
         builtThms.style.display = "block";
     }
+
+    var proofArea = sel("#proof-bench");
+    console.log("Reached this area! Proof area is...");
+    console.log(proofArea);
 
     // clicking on the build area will trigger the
     // applyTheorem() method of the selected theorem

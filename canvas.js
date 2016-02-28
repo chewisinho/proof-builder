@@ -1,5 +1,5 @@
 const WIDTH_PROPORTION = 0.7;   // Proportions of canvas to the window frame
-const HEIGHT_PROPORTION = 0.95;
+const HEIGHT_PROPORTION = 0.40;
 
 // gets element by id/class
 function sel(s) {
