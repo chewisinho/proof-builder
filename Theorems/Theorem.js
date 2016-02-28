@@ -6,6 +6,7 @@ var Triangle;
 var Congruence;
 var TriangleCongruence;
 var Given, MidpointGiven, TriangleGiven;
+var Save;
 
 
 // MAIN THEOREM CLASS
@@ -23,14 +24,26 @@ var Theorem = function(name) {
 // SET UP OBJECT DATABASE.
 
 
-var givens = new Array();
-var goals = new Array();
-var points = new Array();
-var lineSegments = new Array();
-var angles = new Array();
-var triangles = new Array();
-var congruences = new Congruence();
-var triangleCongruences = new TriangleCongruence();
+var givens;
+var goals;
+var points;
+var lineSegments;
+var angles;
+var triangles;
+var congruences;
+var triangleCongruences;
+
+
+function clearGlobalVariables() {
+    givens = new Array();
+    goals = new Array();
+    points = new Array();
+    lineSegments = new Array();
+    angles = new Array();
+    triangles = new Array();
+    congruences = new Congruence();
+    triangleCongruences = new TriangleCongruence();
+}
 
 function lineSegmentEquals(segment1, segment2) {
     var bool = ((segment1.start === segment1.start && segment1.end === segment2.end) ||
@@ -254,17 +267,67 @@ VerticleAngles.contents = function(a1, a2) {
 };
 
 
+// INITIAL EXERCISES
+
+
+function makeExercise1() {
+
+    clearGlobalVariables();
+
+    var A = createPoint('A');
+    var B = createPoint('B');
+    var C = createPoint('C');
+    var D = createPoint('D');
+    var AC = createLineSegment(A, C);
+    var AD = createLineSegment(A, D);
+    var BC = createLineSegment(B, C);
+    var CD = createLineSegment(C, D);
+    AC.midpoint = B;
+    var trABD = createTriangle(A, B, D);
+    var trCBD = createTriangle(C, B, D);
+
+    congruences = new Congruence();
+    congruences.addCongruence(AD, CD);
+    triangleCongruences = new TriangleCongruence();
+
+    var givens = new Array();
+    var startCong = new Given(AD, CD);
+    startCong.generate('congruent');
+    givens.push(startCong);
+    givens.push(new MidpointGiven(AC, B));
+    givens.push(new TriangleGiven(trABD));
+    givens.push(new TriangleGiven(trCBD));
+
+    var goals = Array();
+    var goal = new Given(trABD, trCBD);
+    goal.generate('congruent');
+    goals.push(goal);
+
+    var save = new Save(givens, goals, [], points, lineSegments,
+                    angles, triangles, congruences, triangleCongruences);
+
+    save.proofComplete = function() {
+        return this.triangleCongruences.searchCongruences(trABD, trCBD);
+    };
+
+    return save; 
+    
+}
+
+
 // EXPORT FILE
 
+
 define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
-    '../Properties/Congruence', '../Properties/TriangleCongruence', './Given'],
-    function(Pt, Ls, Tri, Con, TriCon, g) {
+    '../Properties/Congruence', '../Properties/TriangleCongruence', './Given', '../Save'],
+    function(Pt, Ls, Tri, Con, TriCon, g, s) {
 
     Point = Pt;
     LineSegment = Ls;
     Triangle = Tri;
     Congruence = Con;
     TriangleCongruence = TriCon;
+    Save = s;
 
     Given = g.given;
     TriangleGiven = g.trigiven;
@@ -279,6 +342,8 @@ define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
 
         lse: lineSegmentEquals, addl: createLineSegment, csc: case_insensitive_comp,
         ca: createAngle, ct: createTriangle, cp: createPoint,
+
+        mkex1: makeExercise1,
 
         reflP: reflexiveProperty, mst: midpointSplittingTheorem, sss: SSSPostulate
 
