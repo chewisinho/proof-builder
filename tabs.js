@@ -6,6 +6,23 @@
 
 var selectedThm = null; // the currently selected theorem (DOM element)
 var box = null; // the selection box
+var proof;
+
+/*
+ * Load a saved proof.
+ */
+function loadProof(save) {
+    givens = save.givens;
+    goals = save.goals;
+    steps = save.steps;
+    points = save.points;
+    lineSegments = save.lineSegments;
+    angles = save.angles;
+    triangles = save.triangles;
+    congruences = save.congruences;
+    triangleCongruences = save.triangleCongruences;
+    proof = save;
+}
 
 /*
  * Loads the theorems into the theorem sidebar
@@ -14,6 +31,7 @@ function loadTheorems() {
     for (var i = 0; i < theoremList.length; i++) {
         addTheorem(theoremList[i]);
     };
+    loadProof(makeExercise1());
     refreshGivens();
     addGoal();
 };
@@ -63,6 +81,7 @@ function checkInputs(inputs, numInputs, objList, theorem) {
             refreshGivens();
         }
     };
+
     box.remove();
 
 }
@@ -121,7 +140,7 @@ function refreshGivens() {
     for (var i = 0; i < givens.length; i += 1) {
         givenPane.innerHTML += givens[i].toString() + '<br>';
     };
-    if (proofComplete()) {
+    if (proof.proofComplete()) {
         alert("Congratulations, you have proved the theorem!");
     };
 };
