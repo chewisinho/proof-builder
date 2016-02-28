@@ -15,17 +15,5 @@ function Corresponding(obj1,obj2){
 			this.correspondace.push([obj1,ob2]);
 		}
 	};
-
-	/*
-	this.find = function(obj1){
-		for(var corr in this.correspondace){
-			if(corr[0] === obj1){
-				return true; 
-			}
-		}
-		return false;
-
-	*/
 }
-
 module.exports = Corresponding;

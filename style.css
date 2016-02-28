@@ -5,6 +5,7 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100% !important;
+    box-sizing: border-box;
 }
 
 /* left container pane */
@@ -75,7 +76,7 @@ body, html {
 /* header for the builder pane */
 #builder-header {
     background: white;
-    height: 100px;
+    height: 15%;
     width: 100%;
 }
 
@@ -102,4 +103,31 @@ body, html {
 
 canvas {
     position: fixed;
+}
+
+#proof-bench {
+    background: #33839E;
+    position:absolute;
+    display:block;
+    bottom: 0;
+    width:inherit;
+    height:45%;
+
+    cursor: pointer;
+}
+
+#curr-steps {
+    height:100%;
+    width: 100%;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.step-li {
+    width: 100%;
+    padding: 10px 0;
+    padding-left: 10px;
+    background: #256074;
+    border-bottom: 1px solid black;
 }
