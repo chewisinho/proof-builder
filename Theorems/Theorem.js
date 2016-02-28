@@ -81,18 +81,18 @@ var SSSPostulate = new Theorem(SSSPostulateConditions,SSSPostulateResults);
 
 // EXPORT FILE
 
-define(['../Objects/Point','../Objects/LineSegment','../Objects/Triangle','../Properties/Congruence'],
-    function(Pt,Ls,Tri,Con){
- 	Point = Pt;
- 	LineSegment = Ls;
- 	Triangle = Tri;
- 	Congruence = Con;
+define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle', '../Properties/Congruence'],
+    function(Pt, Ls, Tri, Con) {
+	 	Point = Pt;
+	 	LineSegment = Ls;
+	 	Triangle = Tri;
+	 	Congruence = Con;
 
-    return {Thm: Theorem, pts: points, lsgs: lineSegments, tris: triangles,
-            congrs: congruences, addl: addLineSegment,
-            reflC: reflexivePropertyConditions, reflR: reflexivePropertyResults,
-            reflP: reflexiveProperty, mstC: midpointSplittingTheoremConditions,
-            mstR: midpointSplittingTheoremResults, mst: midpointSplittingTheorem,
-            sssC: SSSPostulateConditions, sssR: SSSPostulateResults,
-            sss: SSSPostulate}
+	    return { Thm: Theorem, pts: points, lsgs: lineSegments, tris: triangles,
+	            congrs: congruences, addl: addLineSegment,
+	            reflC: reflexivePropertyConditions, reflR: reflexivePropertyResults,
+	            reflP: reflexiveProperty, mstC: midpointSplittingTheoremConditions,
+	            mstR: midpointSplittingTheoremResults, mst: midpointSplittingTheorem,
+	            sssC: SSSPostulateConditions, sssR: SSSPostulateResults,
+	            sss: SSSPostulate };
 });

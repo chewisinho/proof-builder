@@ -1,11 +1,6 @@
 'use strict';
 
 /*
- * Requires
- */
-var Point = require('./Point.js');
-
-/*
  * Constructor for LineSegment
  */
 var LineSegment = function(start, end) {
@@ -13,4 +8,4 @@ var LineSegment = function(start, end) {
     this.end = end;
 }
 
-define(function() { return LineSegment; });
+define(['./Point'], function() { return LineSegment; });
