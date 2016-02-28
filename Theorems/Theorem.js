@@ -100,6 +100,79 @@ SSSPostulate.getInput = function() {
     return [triangles, 2];
 }
 
+var ASAPostulate = new Theorem("ASA Postulate");
+ASAPostulate.checkConditions = function(triange1,triangle2) {
+	for(var ls1 in this.triangle1.lineSegments){
+		for(var ls2 in this.triangle2.lineSegments){
+			if(congruences.searchCongruences(ls1,ls2)){
+				this.num_angles=0;
+				for(var pt in ls1){
+					for(var pt2 in ls2){
+						if(congruences.searchCongruences(pt,pt2)){
+							this.num_angles+=1;
+						}	
+					}
+				}
+				if(this.num_angles===2){
+					return true;
+				}
+ 			}
+		}
+	}
+	return false;
+}
+ASAPostulate.applyResults = function(triangle1,triangle2) {
+	if(ASAPostulate.checkConditions(triangle1,triangle2)){
+		TriangleCongruence.addTriangleCongruence(triangle1,triangle2);
+	}
+	this.triangle1 = triangle1;
+	this.triangle2 = triangle2l;
+
+}
+ASAPostulate.contents = function() {
+	if(ASAPostulate.checkConditions){
+		return "ASA Postulate: " + this.triangle1.getname() + " and " + this.triangle2.getname() + " are congruent.";
+	} else{
+		return "ASA Postulate: " + this.triangle1.getname() + " and " + this.triangle2.getname() + " are not congruent.";
+	}
+}
+
+var TransitiveProperty = new Theorem("Transitive Property");
+TransitiveProperty.checkConditions = function (a,b,c){
+	if(congruences.searchCongruences(a,b) && congruences.searchCongruences(b,c)){
+		return true;
+	}
+}
+TransitiveProperty.applyResults = function (){
+	if(TransitiveProperty.checkConditions(a,b,c)){
+		if(!congruences.searchCongruences(a,c)){
+			congruences.addCongruence(a,c);
+		} 
+	}
+}
+TransitiveProperty.contents = function (){
+	return "Transitive Property:" + a.getname() + " and " + c.getname() + " are congruent.";
+}
+
+//Trying something out....So yeah.
+var VerticleAngles = new Theorem("Verticle Angles");
+VerticleAngles.checkConditions = function (a1,a2){
+    if(AngleCongruence.verticleAngles(a1,a2)){
+        return true;
+    }else {
+        retun false;
+    }
+}
+VerticleAngles.applyResults = function (a1,a2){
+    if(VerticleAngles.checkConditions(a1,a2)){
+        AngleCongruence.addAngleCongruence(a1,a2);
+        return VerticleAngles.contents(a1,a2);
+    }
+}
+VerticleAngles.contents = function (a1,a2){
+    return "Verticle Angles: " a1.getname() + " and " + a2.getname() + " are congruent";
+}
+
 
 // EXPORT FILE
 

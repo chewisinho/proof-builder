@@ -3,10 +3,10 @@
 var Triangle = function(P1, P2, P3) {
 	this.points = [P1, P2, P3];
 	this.angles = new Array();
-	this.triname = P1.toString() + P2.toString() + P3.toString();
+	this.name = P1.toString() + P2.toString() + P3.toString();
 	this.toString = function() {
-		return this.triname;
+		return this.name;
 	};
 }
 
-define(['./Point', './LineSegment', './Angle'], function() { return Triangle; });
+define(['./Point', './LineSegment'], function() { return Triangle; });
