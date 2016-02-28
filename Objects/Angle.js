@@ -1,6 +1,5 @@
 'use strict';
 
-<<<<<<< HEAD
 var Angle = function (ls1, ls2, cp) {
 	this.lineSegments = [ls1, ls2];
 	this.centralPoint = cp || function(ls1, ls2) {

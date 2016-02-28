@@ -156,22 +156,22 @@ TransitiveProperty.contents = function (){
 
 //Trying something out....So yeah.
 var VerticleAngles = new Theorem("Verticle Angles");
-VerticleAngles.checkConditions = function (a1,a2){
-    if(AngleCongruence.verticleAngles(a1,a2)){
+VerticleAngles.checkConditions = function (a1,a2) {
+    if (AngleCongruence.verticleAngles(a1, a2)) {
         return true;
-    }else {
-        retun false;
-    }
-}
-VerticleAngles.applyResults = function (a1,a2){
+    } else {
+        return false;
+    };
+};
+VerticleAngles.applyResults = function(a1, a2) {
     if(VerticleAngles.checkConditions(a1,a2)){
         AngleCongruence.addAngleCongruence(a1,a2);
         return VerticleAngles.contents(a1,a2);
-    }
-}
-VerticleAngles.contents = function (a1,a2){
-    return "Verticle Angles: " a1.getname() + " and " + a2.getname() + " are congruent";
-}
+    };
+};
+VerticleAngles.contents = function(a1, a2) {
+    return "Verticle Angles: " + a1.toString() + " and " + a2.toString() + " are congruent.";
+};
 
 
 // EXPORT FILE
