@@ -58,6 +58,7 @@ function checkInputs(inputs, numInputs, objList, theorem) {
         } else {
             theorem.applyResults(objs);
             addStep(theorem);
+            refreshGivens(theorem);
         }
     };
     box.remove();
@@ -97,6 +98,14 @@ function addStep(step) {
     newStep.setAttribute('class', 'step-li');
 
     currSteps.appendChild(newStep);
+}
+
+/*
+ * Refreshes the Given pane if there are new things proven
+ */
+function refreshGivens(theorem) {
+    var givenPane = sel('#given-content');
+    givenPane.innerHTML += theorem.contents() + '<br>';
 }
 
 /*

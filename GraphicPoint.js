@@ -9,7 +9,7 @@
 var GraphicPoint = function(x, y, pt) {
     this.x = x || 0;
     this.y = y || 0;
-    this.radius = 3;
+    this.radius = 5;
     this.name = pt.name || 'null';
     this.highlight = false;
 }
@@ -40,6 +40,11 @@ GraphicPoint.prototype.draw = function(ctx) {
     // draw the name
     ctx.font = '20px sans-serif'
     ctx.fillText(this.name, this.x + 5, this.y + 5);
+}
+
+GraphicPoint.prototype.moveTo = function(x, y) {
+    this.x = x;
+    this.y = y;
 }
 
 GraphicPoint.prototype.select = function() {
