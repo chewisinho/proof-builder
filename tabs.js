@@ -42,9 +42,18 @@ function addTheorem(thm) {
  * Applies the theorem
  */
 function applyTheorem(theorem) {
+    var thm;
+    for (var i = 0; i < theoremList.length; i += 1) {
+        var th = theoremList[i];
+        if (th.shortName === theorem) {
+            thm = th;
+        }
+    }
+    console.log(thm);
     // look here sinho
     if (selectedThm)
         sel("#proof-bench").innerHTML = selectedThm;
+
 }
 
 /*
@@ -58,7 +67,9 @@ function setHandlers() {
     var currThms = sel("#curr-theorems-content");
     var builtThms = sel("#built-theorems-content");
 
-    var proofArea = sel("#builder-footer");
+    var proofArea = sel("#proof-bench");
+    console.log("Reached this area! Proof area is...");
+    console.log(proofArea);
 
     // ASSIGN HANDLERS:
 
