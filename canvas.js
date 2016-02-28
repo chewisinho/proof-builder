@@ -100,4 +100,5 @@ function main() {
     // state.addShape(B);
 
     loadTheorems();
+    initSaves();
 };
