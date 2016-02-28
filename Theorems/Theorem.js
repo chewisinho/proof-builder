@@ -30,8 +30,12 @@ var congruences = new Congruence();
 var triangleCongruences = new TriangleCongruence();
 
 function lineSegmentEquals(segment1, segment2) {
-    return ((segment1.start === segment1.start && segment1.end === segment2.end) ||
+    var bool = ((segment1.start === segment1.start && segment1.end === segment2.end) ||
         (segment1.start === segment1.end && segment1.end === segment2.start));
+    if (bool) {
+        console.log("EQUALITY: " + segment1.toString() + " " + segment2.toString());
+    }
+    return bool;
 }
 
 var createLineSegment = function(pt1, pt2) {
@@ -79,7 +83,7 @@ function createTriangle(p1, p2, p3) {
         };
     };
     var tr = new Triangle(p1, p2, p3);
-    tr.lineSegments = [createLineSegment(p1, p2), createLineSegment(p2, p3), createLineSegment(p2, p3)];
+    tr.lineSegments = [createLineSegment(p1, p2), createLineSegment(p2, p3), createLineSegment(p3, p1)];
     tr.angles.push(new Angle(tr.lineSegments[0], tr.lineSegments[1]), tr.P2);
     tr.angles.push(new Angle(tr.lineSegments[1], tr.lineSegments[2]), tr.P3);
     tr.angles.push(new Angle(tr.lineSegments[2], tr.lineSegments[0]), tr.P1);
@@ -91,12 +95,11 @@ function createPoint(P1) {
     for (var i = 0; i < points.length; i += 1) {
         if (P1 === points[i].toString()) {
             return points[i];
-        } else {
-            var pt = new Point(P1);
-            points.push(pt);
-            return  pt;
         };
     };
+    var pt = new Point(P1);
+    points.push(pt);
+    return pt;
 };
 
 
@@ -139,22 +142,24 @@ midpointSplittingTheorem.getInput = function() {
 
 var SSSPostulate = new Theorem("SSS Postulate");
 SSSPostulate.checkConditions = function(triangles) {
-    self.sides1 = [];
-    self.sides2 = [];
+    this.sides1 = [];
+    this.sides2 = [];
     for (var i = 0; i < 3; i += 1) {
         var side1 = triangles[0].lineSegments[i];
         for (var j = 0; j < 3; j += 1) {
             var side2 = triangles[1].lineSegments[j];
-            if (lineSegmentEquals(side1, side2)) {
-                self.sides1.push(side1);
-                self.sides2.push(side2);
+            if (congruences.searchCongruences(side1, side2)) {
+                this.sides1.push(side1);
+                this.sides2.push(side2);
             };
         };
     };
-    return side1.length === 3;
+    console.log(this.sides1);
+    console.log(this.sides2);
+    return this.sides1.length === 3;
 };
 SSSPostulate.applyResults = function(triangles) {
-    triangleCongruences.addSSSCongruence(triangles[0], triangles[1], self.sides1, self.sides2);
+    triangleCongruences.addSSSCongruence(triangles[0], triangles[1], this.sides1, this.sides2);
     this.triangle1 = triangles[0];
     this.triangle2 = triangles[1];
 };
@@ -188,7 +193,7 @@ ASAPostulate.checkConditions = function(triange1,triangle2) {
 }
 ASAPostulate.applyResults = function(triangle1,triangle2) {
 	if(ASAPostulate.checkConditions(triangle1,triangle2)){
-		TriangleCongruence.addTriangleCongruence(triangle1,triangle2);
+		// triangleCongruence.addTriangleCongruence(triangle1,triangle2);
 	}
 	this.triangle1 = triangle1;
 	this.triangle2 = triangle2l;
@@ -245,23 +250,23 @@ define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
     '../Properties/Congruence', '../Properties/TriangleCongruence'],
     function(Pt, Ls, Tri, Con, TriCon) {
 
-        Point = Pt;
-        LineSegment = Ls;
-        Triangle = Tri;
-        Congruence = Con;
-        TriangleCongruence = TriCon;
+    Point = Pt;
+    LineSegment = Ls;
+    Triangle = Tri;
+    Congruence = Con;
+    TriangleCongruence = TriCon;
 
-        return {
+    return {
 
-            Thm: Theorem,
+        Thm: Theorem,
 
-            pts: points, lsgs: lineSegments, tris: triangles, congrs: congruences,
+        pts: points, lsgs: lineSegments, tris: triangles, congrs: congruences, an: angles, tricon: triangleCongruences,
 
-            addl: createLineSegment,
+        lse: lineSegmentEquals, addl: createLineSegment, csc: case_insensitive_comp, ca: createAngle,
+        ct: createTriangle, cp: createPoint,
 
-            reflP: reflexiveProperty, mst: midpointSplittingTheorem, sss: SSSPostulate
+        reflP: reflexiveProperty, mst: midpointSplittingTheorem, sss: SSSPostulate
 
-        };
+    };
 
-    }
-);
+});

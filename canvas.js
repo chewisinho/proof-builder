@@ -28,16 +28,18 @@ function fitCanvas() {
 
 // Types
 var CanvasState, GraphicLineSegment, GraphicPoint;
-var Angle, LineSegment, Point, Theorem, Triangle;
-var congruences, lineSegments, points, triangles;
-var createLineSegment;
+var Angle, LineSegment, Point, Theorem, Triangle, TriangleCongruence;
+var congruences, lineSegments, points, triangles, angles, triangleCongruences;
+var lineSegmentEquals, createLineSegment, case_insensitive_comp, createAngle,
+    createTriangle, createPoint;
 var midpointSplittingTheorem, reflexiveProperty, SSSPostulate;
 var theoremList;
 
 // Import
-require(['Objects/Point', 'Objects/Angle'], function(p, a) {
+require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'], function(p, a, t) {
     Point = p;
     Angle = a;
+    TriangleCongruence = t;
 
     require(['Objects/LineSegment', 'Objects/Triangle', 'Properties/Congruence'],
         function(ls, tr, cong) {
@@ -58,8 +60,15 @@ require(['Objects/Point', 'Objects/Angle'], function(p, a) {
                 lineSegments = s.lsgs;
                 triangles = s.tris;
                 congruences = s.congrs;
+                angles = s.an;
+                triangleCongruences = s.tricon;
 
+                lineSegmentEquals = s.lse;
                 createLineSegment = s.addl;
+                case_insensitive_comp = s.csc;
+                createAngle = s.ca;
+                createTriangle = s.ct;
+                createPoint = s.cp;
 
                 reflexiveProperty = s.reflP;
                 midpointSplittingTheorem = s.mst;
@@ -92,6 +101,7 @@ function main() {
     var trCBD = createTriangle(C, B, D);
     var AC = createLineSegment(A, C)
     AC.midpoint = B;
+    congruences.addCongruence(createLineSegment(A, D), createLineSegment(C, D));
 
     loadTheorems();
 }

@@ -9,4 +9,4 @@ var Triangle = function(P1, P2, P3) {
 	};
 }
 
-define(['./Point', './LineSegment'], function() { return Triangle; });
+define(function() { return Triangle; });
