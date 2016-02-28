@@ -29,14 +29,16 @@ function fitCanvas() {
 // Types
 var CanvasState, GraphicLineSegment, GraphicPoint;
 var Angle, LineSegment, Point, Theorem, Triangle, TriangleCongruence;
-var congruences, lineSegments, points, triangles, angles, triangleCongruences;
+var congruences, givens, lineSegments, points, triangles, angles,
+    triangleCongruences;
 var lineSegmentEquals, createLineSegment, case_insensitive_comp, createAngle,
     createTriangle, createPoint;
 var midpointSplittingTheorem, reflexiveProperty, SSSPostulate;
 var theoremList;
 
 // Import
-require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'], function(p, a, t) {
+require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'],
+    function(p, a, t, g) {
     Point = p;
     Angle = a;
     TriangleCongruence = t;
@@ -56,6 +58,7 @@ require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'], fun
             require(['Theorems/Theorem.js'], function(s) {
                 Theorem = s.Thm;
 
+                givens = s.giv;
                 points = s.pts;
                 lineSegments = s.lsgs;
                 triangles = s.tris;
@@ -81,7 +84,6 @@ require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'], fun
     });
 });
 
-
 function main() {
     state = new CanvasState(canvas);
     // var A = new GraphicPoint(40, 40, new Point("A"));
@@ -98,10 +100,18 @@ function main() {
     var C = createPoint('C');
     var D = createPoint('D');
     var trABD = createTriangle(A, B, D);
+    givens.push(new TriangleGiven(trABD));
     var trCBD = createTriangle(C, B, D);
+    givens.push(new TriangleGiven(trCBD));
+    var AD = createLineSegment(A, D);
+    var CD = createLineSegment(C, D);
+    congruences.addCongruence(AD, CD);
+    var startCong = new Given(AD, CD);
+    startCong.generate('congruent');
+    givens.push(startCong);
     var AC = createLineSegment(A, C)
     AC.midpoint = B;
-    congruences.addCongruence(createLineSegment(A, D), createLineSegment(C, D));
+    givens.push(new MidpointGiven(AC, B));
 
     loadTheorems();
 }

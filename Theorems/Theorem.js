@@ -5,6 +5,7 @@ var LineSegment;
 var Triangle;
 var Congruence;
 var TriangleCongruence;
+var Given, MidpointGiven, TriangleGiven;
 
 
 // MAIN THEOREM CLASS
@@ -22,6 +23,7 @@ var Theorem = function(name) {
 // SET UP OBJECT DATABASE.
 
 
+var givens = new Array();
 var points = new Array();
 var lineSegments = new Array();
 var angles = new Array();
@@ -113,6 +115,9 @@ reflexiveProperty.checkConditions = function(objs) {
 reflexiveProperty.applyResults = function(objs) {
     congruences.addCongruence(objs[0], objs[0]);
     this.obj = objs[0];
+    var g = new Given(objs[0], objs[0]);
+    g.generate('congruent');
+    givens.push(g);
 };
 reflexiveProperty.contents = function() {
     return "Reflexive Property: " + this.obj.toString() + " is congruent to itself.";
@@ -131,6 +136,9 @@ midpointSplittingTheorem.applyResults = function(lines) {
     this.ls1 = createLineSegment(lineSegment.start, lineSegment.midpoint);
     this.ls2 = createLineSegment(lineSegment.midpoint, lineSegment.end);
     congruences.addCongruence(this.ls1, this.ls2);
+    var g = new Given(this.ls1, this.ls2);
+    g.generate('congruent');
+    givens.push(g);
 };
 midpointSplittingTheorem.contents = function() {
     return "Midpoint Splitting Theorem: " + this.lineSegment.midpoint.toString() + " splits " + this.lineSegment
@@ -162,6 +170,9 @@ SSSPostulate.applyResults = function(triangles) {
     triangleCongruences.addSSSCongruence(triangles[0], triangles[1], this.sides1, this.sides2);
     this.triangle1 = triangles[0];
     this.triangle2 = triangles[1];
+    var g = new Given(this.triangle1, this.triangle2);
+    g.generate('congruent');
+    givens.push(g);
 };
 SSSPostulate.contents = function() {
     return "SSS Postulate: " + this.triangle1.toString() + " and " + this.triangle2.toString() + " are congruent.";
@@ -247,8 +258,8 @@ VerticleAngles.contents = function(a1, a2) {
 // EXPORT FILE
 
 define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
-    '../Properties/Congruence', '../Properties/TriangleCongruence'],
-    function(Pt, Ls, Tri, Con, TriCon) {
+    '../Properties/Congruence', '../Properties/TriangleCongruence', './Given'],
+    function(Pt, Ls, Tri, Con, TriCon, g) {
 
     Point = Pt;
     LineSegment = Ls;
@@ -256,14 +267,19 @@ define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
     Congruence = Con;
     TriangleCongruence = TriCon;
 
+    Given = g.given;
+    TriangleGiven = g.trigiven;
+    MidpointGiven = g.mdpgiven;
+
     return {
 
         Thm: Theorem,
 
-        pts: points, lsgs: lineSegments, tris: triangles, congrs: congruences, an: angles, tricon: triangleCongruences,
+        giv: givens, pts: points, lsgs: lineSegments, tris: triangles,
+        congrs: congruences, an: angles, tricon: triangleCongruences,
 
-        lse: lineSegmentEquals, addl: createLineSegment, csc: case_insensitive_comp, ca: createAngle,
-        ct: createTriangle, cp: createPoint,
+        lse: lineSegmentEquals, addl: createLineSegment, csc: case_insensitive_comp,
+        ca: createAngle, ct: createTriangle, cp: createPoint,
 
         reflP: reflexiveProperty, mst: midpointSplittingTheorem, sss: SSSPostulate
 
