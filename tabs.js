@@ -214,6 +214,13 @@ function saveCurrentProof() {
     if (proof.hasOwnProperty('complete')) {
         newSave.complete = true;
     }
+
+    for (var k = 0; k < saves.length; saves += 1) {
+        if (saves[k].name === proof.name) {
+            saves[k] = newSave;
+        };
+    };
+
     addSave(newSave);
 
 }
