@@ -5,7 +5,8 @@ var LineSegment;
 var Triangle;
 var Congruence;
 var TriangleCongruence;
-var Given, MidpointGiven, TriangleGiven;
+var AngleCongruence;
+var Given, MidpointGiven, TriangleGiven, AngleGiven;
 var Save;
 
 
@@ -32,6 +33,7 @@ var angles;
 var triangles;
 var congruences;
 var triangleCongruences;
+var angleCongruences;
 
 
 function clearGlobalVariables() {
@@ -43,6 +45,7 @@ function clearGlobalVariables() {
     triangles = new Array();
     congruences = new Congruence();
     triangleCongruences = new TriangleCongruence();
+    angleCongruences = new AngleCongruence();
 }
 
 function lineSegmentEquals(segment1, segment2) {
@@ -70,11 +73,11 @@ function case_insensitive_comp(strA, strB) {
     return strA.toLowerCase().localeCompare(strB.toLowerCase());
 }
 
-function createAngle(ls1,ls2,cp){
-    this.name = cp.toString();
+function createAngle(ls1, ls2, cp) {
+    /*this.name1 = cp.toString();
     this.name2 = Angle.findcp(ls1,ls2);
     for(var i=0;i<angles.length;i++){
-        if(name === angles[i].toString() || name2 === angles[i].toString()){
+        if(name1 === angles[i].toString() || name2 === angles[i].toString()){
             return angles[i];
         }else{
             var a1 = new Angle(ls1,ls2,cp);
@@ -82,6 +85,10 @@ function createAngle(ls1,ls2,cp){
             return a1;
         }
     }
+    */
+    var ang = new Angle(ls1, ls2, cp);
+    angles.push(ang);
+    return ang;
 }
 
 function createTriangle(p1, p2, p3) {
@@ -198,6 +205,50 @@ SSSPostulate.contents = function() {
     return "SSS Postulate: " + this.triangle1.toString() + " and " + this.triangle2.toString() + " are congruent.";
 };
 SSSPostulate.getInput = function() {
+    return [triangles, 2];
+};
+
+var SASPostulate = new Theorem("SASPostulate");
+SASPostulate.checkConditions = function(triangles) {
+    this.sides1 = [];
+    this.sides2 = [];
+    for (var i = 0; i < 3; i += 1) {
+        var side1 = triangles[0].lineSegments[i];
+        for (var j = 0; j < 3; j += 1) {
+            var side2 = triangles[1].lineSegments[j];
+            if (congruences.searchCongruences(side1, side2)) {
+                var alreadySeen = false;
+                for (var k = 0; k < this.sides2.length; k += 1) {
+                    if (side2 === this.sides2[k]) {
+                        alreadySeen = true;
+                    };
+                };
+                if (!alreadySeen) {
+                    this.sides1.push(side1);
+                    this.sides2.push(side2);
+                };
+            };
+        };
+    };
+    if(this.sides1.length === 2) {
+        for(var i=0;i<angle.length;i+=1){
+        }
+    } else {
+        return false;
+    }
+};
+SASPostulate.applyResults = function(triangles) {
+    triangleCongruences.addSASCongruence(triangles[0], triangles[1], this.sides1, this.sides2);
+    this.triangle1 = triangles[0];
+    this.triangle2 = triangles[1];
+    var g = new Given(this.triangle1, this.triangle2);
+    g.generate('congruent');
+    givens.push(g);
+};
+SASPostulate.contents = function() {
+    return "SSS Postulate: " + this.triangle1.toString() + " and " + this.triangle2.toString() + " are congruent.";
+};
+SASPostulate.getInput = function() {
     return [triangles, 2];
 };
 
@@ -363,13 +414,63 @@ function makeExercise2() {
     
 }
 
+function makeExercise3() {
+
+    clearGlobalVariables();
+
+    var A = createPoint('A');
+    var B = createPoint('B');
+    var C = createPoint('C');
+    var D = createPoint('D');
+    var AB = createLineSegment(A, B);
+    var AD = createLineSegment(A, D);
+    var BD = createLineSegment(B, D);
+    var BC = createLineSegment(B, C);
+    var angABD = createAngle(AB, BD, B);
+    var angCBD = createAngle(BC, BD, B);
+    var trABD = createTriangle(A, B, D);
+    var trCBD = createTriangle(C, B, D);
+
+    congruences = new Congruence();
+    congruences.addCongruence(AB, BC);
+    congruences.addCongruence(angABD,angCBD);
+
+    var TriangleCongruences = new TriangleCongruence();
+    var AngleCongruences = new AngleCongruence();
+
+    var givens = new Array();
+    var startCong = new Given(AB, BC);
+    startCong.generate('congruent');
+    var startCong2 = new Given(angABD,angCBD);
+    startCong2.generate('congruent');
+    givens.push(new AngleGiven(angABD));
+    givens.push(new AngleGiven(angCBD));
+    givens.push(new TriangleGiven(trABD));
+    givens.push(new TriangleGiven(trCBD));
+
+    var goals = Array();
+    var goal = new Given(trABD, trCBD);
+    goal.generate('congruent');
+    goals.push(goal);
+
+    var save = new Save(givens, goals, [], points, lineSegments,
+                    angles, triangles, congruences, triangleCongruences, angleCongruences);
+
+    save.name = "Exercise 3";
+    save.proofComplete = function() {
+        return this.triangleCongruences.searchCongruences(trABD, trCBD);
+    };
+
+    return save; 
+    
+};
 
 // EXPORT FILE
 
 
 define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
-    '../Properties/Congruence', '../Properties/TriangleCongruence', './Given', '../Save'],
-    function(Pt, Ls, Tri, Con, TriCon, g, s) {
+    '../Properties/Congruence', '../Properties/TriangleCongruence', './Given', '../Save','../Properties/AngleCongruence'],
+    function(Pt, Ls, Tri, Con, TriCon, g, s, AngCon) {
 
     Point = Pt;
     LineSegment = Ls;
@@ -381,6 +482,9 @@ define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
     Given = g.given;
     TriangleGiven = g.trigiven;
     MidpointGiven = g.mdpgiven;
+    AngleGiven = g.angiven;
+
+    AngleCongruence = AngCon;
 
     return {
 
@@ -392,7 +496,7 @@ define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
         lse: lineSegmentEquals, addl: createLineSegment, csc: case_insensitive_comp,
         ca: createAngle, ct: createTriangle, cp: createPoint,
 
-        mkex1: makeExercise1, mkex2: makeExercise2,
+        mkex1: makeExercise1, mkex2: makeExercise2, mkex3: makeExercise3,
 
         reflP: reflexiveProperty, mst: midpointSplittingTheorem, sss: SSSPostulate
 

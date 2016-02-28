@@ -31,8 +31,16 @@ function MidpointGiven(segment, midpoint) {
 	};
 };
 
+function AngleGiven(angle) {
+	this.angle = angle;
+	this.toString = function() {
+		return this.angle.toString() + ".";
+	}
+}
+
 define(function() { return {
 	given: Given,
+	angiven: AngleGiven,
 	trigiven: TriangleGiven,
 	mdpgiven: MidpointGiven
 }; });

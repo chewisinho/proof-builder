@@ -31,7 +31,7 @@ function loadProof(save) {
  * Loads the theorems into the theorem sidebar
  */
 function loadTheorems() {
-    for (var i = 0; i < theoremList.length; i++) {
+    for (var i = 0; i < theoremList.length; i+=1) {
         addTheorem(theoremList[i]);
     };
     // loadProof(makeExercise2());
@@ -198,12 +198,15 @@ var saves = new Array(); // idk?
 function initSaves() {
     console.log(makeExercise1);
     console.log(makeExercise2);
+    console.log(makeExercise3);
 
     var ex1 = makeExercise1();
     var ex2 = makeExercise2();
+    var ex3 = makeExercise3();
 
     saves.push(ex1);
     saves.push(ex2);
+    saves.push(ex3);
 
     refreshSaves();
 }

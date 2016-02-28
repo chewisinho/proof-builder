@@ -1,4 +1,4 @@
-const WIDTH_PROPORTION = 0.7;   // Proportions of canvas to the window frame
+const WIDTH_PROPORTION = 0.35;   // Proportions of canvas to the window frame
 const HEIGHT_PROPORTION = 0.40;
 
 // gets element by id/class
@@ -28,21 +28,22 @@ function fitCanvas() {
 
 // Types
 var CanvasState, GraphicLineSegment, GraphicPoint;
-var Angle, LineSegment, Point, Theorem, Triangle, TriangleCongruence;
+var Angle, AngleCongruence, LineSegment, Point, Theorem, Triangle, TriangleCongruence;
 var congruences, givens, goals, lineSegments, points, triangles, angles,
     triangleCongruences;
 var lineSegmentEquals, createLineSegment, case_insensitive_comp, createAngle,
     createTriangle, createPoint;
 var midpointSplittingTheorem, reflexiveProperty, SSSPostulate;
 var theoremList;
-var makeExercise1, makeExercise2;
+var makeExercise1, makeExercise2, makeExercise3;
 
 // Import
-require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'],
+require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence', 'Properties/AngleCongruence'],
     function(p, a, t, g) {
     Point = p;
     Angle = a;
     TriangleCongruence = t;
+    AngleCongruence = g;
 
     require(['Objects/LineSegment', 'Objects/Triangle', 'Properties/Congruence'],
         function(ls, tr, cong) {
@@ -81,6 +82,7 @@ require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'],
 
                 makeExercise1 = s.mkex1;
                 makeExercise2 = s.mkex2;
+                makeExercise3 = s.mkex3;
 
                 theoremList = [midpointSplittingTheorem, reflexiveProperty, SSSPostulate];
                 main();
