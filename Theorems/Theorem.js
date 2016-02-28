@@ -1,9 +1,9 @@
 'use strict';
-var Point = require('../Objects/Point.js');
-var LineSegment = require('../Objects/LineSegment.js');
-var Triangle = require('../Objects/Triangle.js');
-var Congruence = require('../Properties/Congruence.js');
 
+var Point;
+var LineSegment;
+var Triangle;
+var Congruence;
 
 // MAIN THEOREM CLASS
 
@@ -66,7 +66,7 @@ var SSSPostulateConditions = function(triange1,triangle2){
 			}
 		}
 	}
-	if(num_congruentsides =3){
+	if(num_congruentsides ==3){
 		return true;
 	}else {
 		return false;
@@ -81,5 +81,18 @@ var SSSPostulate = new Theorem(SSSPostulateConditions,SSSPostulateResults);
 
 // EXPORT FILE
 
+define(['../Objects/Point','../Objects/LineSegment','../Objects/Triangle','../Properties/Congruence'],
+    function(Pt,Ls,Tri,Con){
+ 	Point = Pt;
+ 	LineSegment = Ls;
+ 	Triangle = Tri;
+ 	Congruence = Con;
 
-module.exports = Theorem;
+    return {Thm: Theorem, pts: points, lsgs: lineSegments, tris: triangles,
+            congrs: congruences, addl: addLineSegment,
+            reflC: reflexivePropertyConditions, reflR: reflexivePropertyResults,
+            reflP: reflexiveProperty, mstC: midpointSplittingTheoremConditions,
+            mstR: midpointSplittingTheoremResults, mst: midpointSplittingTheorem,
+            sssC: SSSPostulateConditions, sssR: SSSPostulateResults,
+            sss: SSSPostulate}
+});

@@ -1,7 +1,7 @@
 const WIDTH_PROPORTION = 0.7;   // proportions of canvas to the window frame
 const HEIGHT_PROPORTION = 0.95;
 
-var state;
+var state; // the canvas state
 
 // set size of canvas to fill frame
 var canvas = sel("canvas");
@@ -24,9 +24,11 @@ var Point, LineSegment;
 var CanvasState, GraphicPoint, GraphicLineSegment;
 
 // import
-require(['Objects/Point','Objects/LineSegment'],
-    function(p, ls) {
+require(['Objects/Point'], function(p) {
     Point = p;
+
+require(['Objects/LineSegment'],
+    function(ls) {
     LineSegment = ls;
 
 require(['CanvasState', 'GraphicPoint', 'GraphicLineSegment'],
@@ -35,7 +37,36 @@ require(['CanvasState', 'GraphicPoint', 'GraphicLineSegment'],
     GraphicPoint = gp;
     GraphicLineSegment = gls;
 
+var Theorem, points, linesegments, triangles, congruences,
+    addLineSegment, reflexivePropertyConditions, reflexivePropertyResults,
+    reflexiveProperty, midpointSplittingTheoremConditions, midpointSplittingTheoremResults,
+    midpointSplittingTheorem, SSSPostulateConditions, SSSPostulateResults,
+    SSSPostulate;
+require(['Properties/Congruence','Theorems/Theorem'],
+    function(Cong, Thm, pts, lsgs, tris, congrs, addl,
+             reflC, reflR, reflP,
+             mstC, mstR, mst,
+             sssC, sssR, sss) {
+    Congruence = Cong;
+    Theorem = Thm;
+    points = pts;
+    linesegments = lsgs;
+    triangles = tris;
+    congruences = congrs;
+    addLineSegment = addl;
+    reflexivePropertyConditions = reflC;
+    reflexivePropertyResults = reflR;
+    reflexiveProperty = reflP;
+    midpointSplittingTheoremConditions = mstC;
+    midpointSplittingTheoremResults = mstR;
+    midpointSplittingTheorem = mst;
+    SSSPostulateConditions = sssC;
+    SSSPostulateResults = sssR;
+    SSSPostulate = sss;
+
     main();
+});
+});
 });
 });
 

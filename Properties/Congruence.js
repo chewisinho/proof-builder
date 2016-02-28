@@ -18,4 +18,4 @@ function Congruence() {
 	};
 }
 
-module.exports = Congruence;
+define(function () { return Congruence; });
