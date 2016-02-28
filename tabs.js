@@ -126,6 +126,7 @@ function addStep(step) {
  */
 function addGoal() {
     var goalPane = sel('#results-content');
+    goalPane.innerHTML = '';
     for (var i = 0; i < goals.length; i += 1) {
         goalPane.innerHTML += goals[i].toString() + '<br>';
     };
@@ -185,6 +186,18 @@ setHandlers();
 // PROVE THEOREMS TAB -- SAVES //
 var saves = new Array(); // idk?
 
+// load the initial exercises into the prove theorems tab
+function initSaves() {
+    console.log(makeExercise1);
+    console.log(makeExercise2);
+
+    var ex1 = makeExercise1();
+    var ex2 = makeExercise2();
+
+    addSave(ex1);
+    addSave(ex2);
+}
+
 function saveCurrentProof() {
     var currSteps = sel('#curr-steps').childNodes;
     var steps = new Array(); // to hold the steps
@@ -218,8 +231,14 @@ function appendSave(save) {
     var pfSave = document.createElement('div');
     pfSave.setAttribute('class','save-li');
     pfSave.innerHTML = save.name;
+    pfSave.save = save; // save inside the document object
     if (save.hasOwnProperty('complete')) {
         pfSave.innerHTML = '\u2713 ' + pfSave.innerHTML;
+    }
+
+    // when we click on the save, load the save data
+    pfSave.onclick = function() {
+        loadProof(pfSave.save);
     }
 
     list.appendChild(pfSave);
