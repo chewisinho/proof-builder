@@ -77,17 +77,49 @@ SSSPostulate.checkConditions = function(triange1, triangle2) {
             }
         }
     }
-    return numCongruentSides === 3;
+    if(numCongruentSides === 3){
+    	return true;
+    } else {
+    	return false;
+    }
 };
 SSSPostulate.applyResults = function(triangle1, triangle2) {
-    TriangleCongruence.addTriangleCongruence(triangle1, triangle2);
-    self.triangle1 = triangle1;
-    self.triangle2 = triangle2;
+	if(SSSPostulate.checkConditions(triangle1,triangle2)){
+		TriangleCongruence.addTriangleCongruence(triangle1, triangle2);
+	}
+    this.triangle1 = triangle1;
+    this.triangle2 = triangle2;
 };
 SSSPostulate.contents = function() {
-    return "SSS Postulate: " + self.triangle1.toString() + " and " + self.triangle2.toString() + " are congruent.";
+    return "SSS Postulate: " + this.triangle1.toString() + " and " + this.triangle2.toString() + " are congruent.";
 }
 
+var ASAPostulate = new Theorem("ASA Postulate");
+ASAPostulate.checkConditions = function(triange1,triangle2) {
+	for(var ls1 in triangle1.lineSegments){
+		for(var ls2 in triangle2.lineSegments){
+			if(congruences.searchCongruences(ls1,ls2)||congruences.searchCongruences(ls2,ls1)){
+				 
+ 			}
+		}
+	}
+	return false;
+}
+ASAPostulate.applyResults = function(triangle1,triangle2) {
+	if(ASAPostulate.checkConditions(triangle1,triangle2)){
+		TriangleCongruence.addTriangleCongruence(triangle1,triangle2);
+	}
+	this.triangle1 = triangle1;
+	this.triangle2 = triangle2l;
+
+}
+ASAPostulate.contents = function() {
+	if(ASAPostulate.checkConditions){
+		return "ASA Postulate: " + this.triangle1.getname() + " and " + this.triangle2.getname() + " are congruent.";
+	} else{
+		return "ASA Postulate: " + this.triangle1.getname() + " and " + this.triangle2.getname() + " are not congruent.";
+	}
+}
 
 // EXPORT FILE
 
