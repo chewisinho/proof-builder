@@ -72,59 +72,7 @@ require(['Objects/Point', 'Objects/Angle'], function(p, a) {
     });
 });
 
-function case_insensitive_comp(strA, strB) {
-    return strA.toLowerCase().localeCompare(strB.toLowerCase());
-}
 
-function createTriangle(p1, p2, p3) {
-    // Check if the Triangle already exists.
-    var name = [p1.toString(), p2.toString(), p3.toString()];
-    name = name.sort(case_insensitive_comp);
-    name = name.join("");
-    for (var i = 0; i < triangles.length; i += 1) {
-        var tName = triangles[i].name;
-        tName = tName.split("");
-        tName.sort(case_insensitive_comp);
-        tName.join("");
-        if (name === tName) {
-            return triangles[i];
-        };
-    };
-    var tr = new Triangle(p1, p2, p3);
-    tr.lineSegments = [addLineSegment(p1, p2), addLineSegment(p2, p3), addLineSegment(p2, p3)];
-    tr.angles.push(new Angle(tr.lineSegments[0], tr.lineSegments[1]), tr.P2);
-    tr.angles.push(new Angle(tr.lineSegments[1], tr.lineSegments[2]), tr.P3);
-    tr.angles.push(new Angle(tr.lineSegments[2], tr.lineSegments[0]), tr.P1);
-    triangles.push(tr);
-    return tr;
-}
-
-function createPoint(P1){
-    for(int i=0; i<points.length;i++){
-        if(P1 === points[i].toString()){
-                return points[i];
-        } else{
-             var pt = new Point(P1);
-             points.push(pt);
-             return  pt;
-        }
-    }
-}
-
-function createLineSegment(p1,p2) {
-    var name = p1+p2, name2 = p2+p1;
-    for(int i=0; i<lineSegments.length;i++) {
-        if(name === lineSegments[i].toString() || name2 === lineSegments[i].toString()){
-            return lineSegments[i];
-        } else{
-            var lS = new LineSegment(p1.p2);
-            lineSegments.push(lS);
-            return lS;
-        }
-    }
-}
-
-// BEGIN PROOF BUILDER IMPLEMENTATION
 function main() {
     state = new CanvasState(canvas);
     // var A = new GraphicPoint(40, 40, new Point("A"));
@@ -136,10 +84,10 @@ function main() {
     // BEGIN PROOF IMPLEMENTATION TESTING
 
     // GIVEN INFORMATION
-    var A = new Point('A');
-    var B = new Point('B');
-    var C = new Point('C');
-    var D = new Point('D');
+    var A = createPoint('A');
+    var B = createPoint('B');
+    var C = createPoint('C');
+    var D = createPoint('D');
     var trABD = createTriangle(A, B, D);
     var trCBD = createTriangle(C, B, D);
     var AC = addLineSegment(A, C)

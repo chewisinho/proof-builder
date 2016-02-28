@@ -39,6 +39,46 @@ var addLineSegment = function(pt1, pt2) {
 }
 
 
+function case_insensitive_comp(strA, strB) {
+    return strA.toLowerCase().localeCompare(strB.toLowerCase());
+}
+
+function createTriangle(p1, p2, p3) {
+    // Check if the Triangle already exists.
+    var name = [p1.toString(), p2.toString(), p3.toString()];
+    name = name.sort(case_insensitive_comp);
+    name = name.join("");
+    for (var i = 0; i < triangles.length; i += 1) {
+        var tName = triangles[i].name;
+        tName = tName.split("");
+        tName.sort(case_insensitive_comp);
+        tName.join("");
+        if (name === tName) {
+            return triangles[i];
+        };
+    };
+    var tr = new Triangle(p1, p2, p3);
+    tr.lineSegments = [addLineSegment(p1, p2), addLineSegment(p2, p3), addLineSegment(p2, p3)];
+    tr.angles.push(new Angle(tr.lineSegments[0], tr.lineSegments[1]), tr.P2);
+    tr.angles.push(new Angle(tr.lineSegments[1], tr.lineSegments[2]), tr.P3);
+    tr.angles.push(new Angle(tr.lineSegments[2], tr.lineSegments[0]), tr.P1);
+    triangles.push(tr);
+    return tr;
+}
+
+function createPoint(P1) {
+    for (int i = 0; i < points.length; i++) {
+        if (P1 === points[i].toString()) {
+            return points[i];
+        } else {
+            var pt = new Point(P1);
+            points.push(pt);
+            return  pt;
+        }
+    }
+}
+
+
 // LIST OF THEOREMS
 
 
