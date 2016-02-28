@@ -84,7 +84,7 @@ require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence', 'Pro
                 makeExercise2 = s.mkex2;
                 makeExercise3 = s.mkex3;
 
-                theoremList = [midpointSplittingTheorem, reflexiveProperty, SSSPostulate];
+                theoremList = [midpointSplittingTheorem, reflexiveProperty, SASPostulate, SSSPostulate];
                 main();
             });
         });
