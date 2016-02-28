@@ -1,9 +1,9 @@
-const WIDTH_PROPORTION = 0.7;   // proportions of canvas to the window frame
+const WIDTH_PROPORTION = 0.7;   // Proportions of canvas to the window frame
 const HEIGHT_PROPORTION = 0.95;
 
-var state; // the canvas state
+var state; // Canvas state
 
-// set size of canvas to fill frame
+// Set size of canvas to fill frame.
 var canvas = sel("canvas");
 fitCanvas();
 window.onresize = function() {
@@ -11,8 +11,8 @@ window.onresize = function() {
     if (state) {
         state.fit();
         state.valid = false;
-        //state.width = canvas.width;
-        //state.height = canvas.height;
+        // state.width = canvas.width;
+        // state.height = canvas.height;
     }
 };
 
@@ -21,7 +21,7 @@ function fitCanvas() {
     canvas.height = window.innerHeight * HEIGHT_PROPORTION;
 }
 
-// types
+// Types
 var Point, LineSegment, Triangle;
 var CanvasState, GraphicPoint, GraphicLineSegment;
 var Theorem, points, lineSegments, triangles, congruences,
@@ -30,7 +30,7 @@ var Theorem, points, lineSegments, triangles, congruences,
     midpointSplittingTheorem, SSSPostulateConditions, SSSPostulateResults,
     SSSPostulate;
 
-// import
+// Import
 require(['Objects/Point'], function(p) {
     Point = p;
 
@@ -89,10 +89,11 @@ function main() {
     var trCBD = new Triangle(C, B, D);
     console.log(trABD);
     console.log(trCBD);
-    // console.log(typeof addLineSegment);
     var AC = addLineSegment(A, C)
     AC.midpoint = B;
     console.log(AC);
     console.log(AC.midpoint);
-    
+
+    // TESTING THE ACTUAL PROOF
+
 }

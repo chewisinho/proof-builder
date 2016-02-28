@@ -8,9 +8,11 @@ var Congruence;
 // MAIN THEOREM CLASS
 
 
-var Theorem = function(checkCondition, applyResult) {
+var Theorem = function(checkCondition, applyResult, name, contents) {
 	this.checkCondition = checkCondition;
 	this.applyResult = applyResult;
+	this.shortName = name;
+	this.contents = contents;
 }
 
 
@@ -38,46 +40,59 @@ var addLineSegment = function(pt1, pt2) {
 // LIST OF THEOREMS
 
 
-var reflexivePropertyConditions = function(lineSegment) {
+var reflexivePropertyConditions = function(obj) {
 	return true;
 }
-var reflexivePropertyResults = function(lineSegment) {
-	congruences.addCongruence(lineSegment, lineSegment);
+var reflexivePropertyResults = function(obj) {
+	congruences.addCongruence(obj, obj);
+	this.obj = obj;
 }
-var reflexiveProperty = new Theorem(reflexivePropertyConditions, reflexivePropertyResults);
+var reflexiveProperty = new Theorem(
+	reflexivePropertyConditions,
+	reflexivePropertyResults,
+	"Reflexive Property",
+	"Reflexive Property: " + obj.toString() + " is congruent to itself."
+);
 
 var midpointSplittingTheoremConditions = function(lineSegment) {
 	return lineSegment.hasOwnProperty('midpoint');
 }
 var midpointSplittingTheoremResults = function(lineSegment) {
-	var ls1 = addLineSegment(lineSegment.start, lineSegment.midpoint);
-	var ls2 = addLineSegment(lineSegment.midpoint, lineSegment.end);
-	congruences.addCongruence(ls1, ls2);
+	this.lineSegment = lineSegment;
+	this.ls1 = addLineSegment(lineSegment.start, lineSegment.midpoint);
+	this.ls2 = addLineSegment(lineSegment.midpoint, lineSegment.end);
+	congruences.addCongruence(this.ls1, this.ls2);
 }
-var midpointSplittingTheorem = new Theorem(midpointSplittingTheoremConditions, midpointSplittingTheoremResults);
+var midpointSplittingTheorem = new Theorem(
+	midpointSplittingTheoremConditions,
+	midpointSplittingTheoremResults,
+	"Midpoint Splitting Theorem",
+	"Midpoint Splitting Theorem: " + this.lineSegment.midpoint.toString() + " splits " + this.lineSegment
+		+ " into two congruent line segments: " + this.ls1.toString() " and " + this.ls2.toString() + "."
+);
 
-// TODO: ADD SSS POSTULATE AFTER TRIANGLE CONGRUENCE IS FINISHED.
-var SSSPostulateConditions = function(triange1,triangle2){
-	var num_congruentsides = 0;
-	for(var i=0;i<3;i++){
-		for(var j=0;j<3;j++){
-			if(congruences.search(triangle1.LineSegments[i],triangle2.LineSegments[j])){
-				num_congruentsides++;
+var SSSPostulateConditions = function(triange1, triangle2) {
+	var numCongruentSides = 0;
+	for(var i = 0; i < 3; i += 1) {
+		for(var j = 0; j < 3; j += 1) {
+			if (congruences.search(triangle1.lineSegments[i], triangle2.lineSegments[j])) {
+				numCongruentSides += 1;
 			}
 		}
 	}
-	if(num_congruentsides ==3){
-		return true;
-	}else {
-		return false;
-	}
-}
-var SSSPostulateResults = function(triangle1,triangle2){
-	if(SSSPostulateConditions(triangle1,triangle2)){
-		TriangleCongruence.addTriangleCongruence(triangle1,triangle2);
-	}
-}
-var SSSPostulate = new Theorem(SSSPostulateConditions,SSSPostulateResults);
+	return numCongruentSides === 3;
+};
+var SSSPostulateResults = function(triangle1, triangle2) {
+	TriangleCongruence.addTriangleCongruence(triangle1, triangle2);
+	self.triangle1 = triangle1;
+	self.triangle2 = triangle2;
+};
+var SSSPostulate = new Theorem(
+	SSSPostulateConditions,
+	SSSPostulateResults,
+	"SSS Postulate",
+	"SSS Postulate: " + self.triangle1.toString() + " and " + self.triangle2.toString() " are congruent."
+);
 
 // EXPORT FILE
 
