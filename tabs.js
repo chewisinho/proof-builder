@@ -5,6 +5,7 @@
  */
 
 var selectedThm = null; // the currently selected theorem (DOM element)
+var selectedSave = null;
 var box = null; // the selection box
 var proof;
 
@@ -31,7 +32,7 @@ function loadProof(save) {
  * Loads the theorems into the theorem sidebar
  */
 function loadTheorems() {
-    for (var i = 0; i < theoremList.length; i+=1) {
+    for (var i = 0; i < theoremList.length; i++) {
         addTheorem(theoremList[i]);
     };
     // loadProof(makeExercise2());
@@ -125,7 +126,7 @@ function addStep(step) {
 function addAllSteps(steps) {
     sel("#curr-steps").innerHTML = '';
     for (var i = 0; i < steps.length; i++) {
-        addStep(steps[i].innerHTML);
+        addStep(steps[i]);
     }
 }
 
@@ -198,15 +199,12 @@ var saves = new Array(); // idk?
 function initSaves() {
     console.log(makeExercise1);
     console.log(makeExercise2);
-    console.log(makeExercise3);
 
     var ex1 = makeExercise1();
     var ex2 = makeExercise2();
-    var ex3 = makeExercise3();
 
     saves.push(ex1);
     saves.push(ex2);
-    saves.push(ex3);
 
     refreshSaves();
 }
@@ -243,57 +241,33 @@ function saveCurrentProof() {
     refreshSaves();
 }
 
-// adds a save to the saves array
-function addSave(save, index) {
-    saves.push(save);
-    appendSave(save);
-}
-
-// appends a save to the Prove Theorems tab
-function appendSave(save) {
-    var list = sel('#built-theorems-content');
-
-    var pfSave = document.createElement('div');
-    pfSave.setAttribute('class','save-li');
-    pfSave.innerHTML = save.name;
-    pfSave.save = save; // save inside the document object
-    if (save.hasOwnProperty('complete')) {
-        pfSave.innerHTML = '\u2713 ' + pfSave.innerHTML;
-    }
-
-    // when we click on the save, load the save data
-    pfSave.onclick = function() {
-        loadProof(save);
-    }
-
-    list.appendChild(pfSave);
-}
-
-function appendAllSaves() {
-    // loop through saves array and append to the tab
-    for (var i = 0; i < saves.length; i++) {
-        appendSave(saves[i]);
-    }
-}
-
 function refreshSaves() {
     var list = sel('#built-theorems-content');
 
     list.innerHTML = '';
+    selectedSave = null;
 
     for (var i = 0; i < saves.length; i++) {
         var save = saves[i];
         var pfSave = document.createElement('div');
-        pfSave.setAttribute('class','save-li');
         pfSave.innerHTML = save.name;
         pfSave.save = save; // save inside the document object
         if (save.hasOwnProperty('complete')) {
             pfSave.innerHTML = '\u2713 ' + pfSave.innerHTML;
         }
 
+        pfSave.setAttribute("class","save-li");
+
         // when we click on the save, load the save data
         pfSave.onclick = function() {
-            console.log(this.save);
+            console.log('clicked ' + this);
+            // reset selected divs
+            if (selectedSave) sel("#sel-save").id = "";
+
+            // apply selected div id to the one clicked on
+            selectedSave = this.innerHTML;
+            this.id = "sel-save";
+
             loadProof(this.save);
         }
 
