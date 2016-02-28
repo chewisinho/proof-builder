@@ -99,7 +99,17 @@ ASAPostulate.checkConditions = function(triange1,triangle2) {
 	for(var ls1 in triangle1.lineSegments){
 		for(var ls2 in triangle2.lineSegments){
 			if(congruences.searchCongruences(ls1,ls2)||congruences.searchCongruences(ls2,ls1)){
-				 
+				this.num_angles=0;
+				for(var pt in ls1){
+					for(var pt2 in ls2){
+						if(congruences.searchCongruences(pt,pt2)){
+							this.num_angles+=1;
+						}	
+					}
+				}
+				if(this.num_angles===2){
+					return true;
+				}
  			}
 		}
 	}
