@@ -13,8 +13,9 @@ var box = null; // the selection box
 function loadTheorems() {
     for (var i = 0; i < theoremList.length; i++) {
         addTheorem(theoremList[i]);
-    }
-}
+    };
+    refreshGivens();
+};
 
 // for adding a theorem to the 'current theorems' tab
 function addTheorem(thm) {
@@ -58,7 +59,7 @@ function checkInputs(inputs, numInputs, objList, theorem) {
         } else {
             theorem.applyResults(objs);
             addStep(theorem);
-            refreshGivens(theorem);
+            refreshGivens();
         }
     };
     box.remove();
@@ -103,10 +104,13 @@ function addStep(step) {
 /*
  * Refreshes the Given pane if there are new things proven
  */
-function refreshGivens(theorem) {
+function refreshGivens() {
     var givenPane = sel('#given-content');
-    givenPane.innerHTML += theorem.contents() + '<br>';
-}
+    givenPane.innerHTML = '';
+    for (var i = 0; i < givens.length; i += 1) {
+        givenPane.innerHTML += givens[i].toString() + '<br>';
+    };
+};
 
 /*
  * sets handlers to the theorems so that people can see what they
