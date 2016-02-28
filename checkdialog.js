@@ -34,7 +34,12 @@ var CheckDialog = function(id, options, callback) {
     submit.onclick = function() { readInput(callback); };
     checkbuttons.appendChild(submit);
 
+    var closebutton - document.createElement('button');
+    closebutton.innerHTML = 'Close';
+    closebutton.onclick = this.close;
+
     this.overlay.appendChild(checkbuttons);
+    this.overlay.appendChild(closebutton);
     document.body.appendChild(this.overlay);
 };
 
