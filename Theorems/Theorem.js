@@ -74,8 +74,8 @@ function case_insensitive_comp(strA, strB) {
 }
 
 function createAngle(ls1, ls2, cp) {
-    /*this.name1 = cp.toString();
-    this.name2 = Angle.findcp(ls1,ls2);
+    var name1 = cp.toString();
+    var name2 = Angle.findcp(ls1,ls2);
     for(var i=0;i<angles.length;i++){
         if(name1 === angles[i].toString() || name2 === angles[i].toString()){
             return angles[i];
@@ -85,8 +85,6 @@ function createAngle(ls1, ls2, cp) {
             return a1;
         }
     }
-    */
-    var ang = new Angle(ls1, ls2, cp);
     angles.push(ang);
     return ang;
 }
@@ -208,10 +206,11 @@ SSSPostulate.getInput = function() {
     return [triangles, 2];
 };
 
-var SASPostulate = new Theorem("SASPostulate");
+var SASPostulate = new Theorem("SAS Postulate");
 SASPostulate.checkConditions = function(triangles) {
     this.sides1 = [];
     this.sides2 = [];
+    this.angles = [];
     for (var i = 0; i < 3; i += 1) {
         var side1 = triangles[0].lineSegments[i];
         for (var j = 0; j < 3; j += 1) {
@@ -231,7 +230,14 @@ SASPostulate.checkConditions = function(triangles) {
         };
     };
     if(this.sides1.length === 2) {
-        for(var i=0;i<angle.length;i+=1){
+        for(var i=0;i<angles.length;i+=1){
+            this.angles.push(createAngle(this.sides1[0]),this.sides1[1]);
+            this.angles.push(createAngle(this.sides2[0]),this.sides2[1]);
+            if(congruences.searchCongruences(this.angle[0],this.angle[1])){
+                return true;
+            } else {
+                return false;
+            }
         }
     } else {
         return false;
