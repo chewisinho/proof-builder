@@ -51,7 +51,7 @@ var reflexiveProperty = new Theorem(
 	reflexivePropertyConditions,
 	reflexivePropertyResults,
 	"Reflexive Property",
-	"Reflexive Property: " + obj.toString() + " is congruent to itself."
+	"Reflexive Property: " + this.obj.toString() + " is congruent to itself."
 );
 
 var midpointSplittingTheoremConditions = function(lineSegment) {
@@ -68,7 +68,7 @@ var midpointSplittingTheorem = new Theorem(
 	midpointSplittingTheoremResults,
 	"Midpoint Splitting Theorem",
 	"Midpoint Splitting Theorem: " + this.lineSegment.midpoint.toString() + " splits " + this.lineSegment
-		+ " into two congruent line segments: " + this.ls1.toString() " and " + this.ls2.toString() + "."
+		+ " into two congruent line segments: " + this.ls1.toString() + " and " + this.ls2.toString() + "."
 );
 
 var SSSPostulateConditions = function(triange1, triangle2) {
@@ -91,7 +91,7 @@ var SSSPostulate = new Theorem(
 	SSSPostulateConditions,
 	SSSPostulateResults,
 	"SSS Postulate",
-	"SSS Postulate: " + self.triangle1.toString() + " and " + self.triangle2.toString() " are congruent."
+	"SSS Postulate: " + self.triangle1.toString() + " and " + self.triangle2.toString() + " are congruent."
 );
 
 // EXPORT FILE

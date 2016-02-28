@@ -4,8 +4,8 @@
  * theorems..
  */
 
-var counter = 0;
-var selectedThm = null; // the currently selected theorem
+var counter = 0; // remove later
+var selectedThm = null; // the currently selected theorem (DOM element)
 
 // gets element by id/class
 function sel(s) {
@@ -17,7 +17,7 @@ function addTheorem() {
     var currThms = sel("#curr-theorems-content");
     var newThm = document.createElement("div");
 
-    newThm.name = "thm"; // TODO make this a unique identifier
+    newThm.name = "thm" + counter; // TODO make this a unique identifier
 
     // change the selected theorem to the one clicked
     newThm.onclick = function() {
