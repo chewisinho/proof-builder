@@ -1,9 +1,9 @@
 const WIDTH_PROPORTION = 0.7;   // Proportions of canvas to the window frame
 const HEIGHT_PROPORTION = 0.95;
 
-var state; // Canvas state
+var state; // The canvas state
 
-// Set size of canvas to fill frame.
+// Set size of canvas to fill frame
 var canvas = sel("canvas");
 fitCanvas();
 window.onresize = function() {
@@ -85,11 +85,10 @@ function main() {
     var trCBD = new Triangle(C, B, D);
     console.log(trABD);
     console.log(trCBD);
+    // console.log(typeof addLineSegment);
     var AC = addLineSegment(A, C)
     AC.midpoint = B;
     console.log(AC);
     console.log(AC.midpoint);
-
-    // TESTING THE ACTUAL PROOF
-
+    
 }

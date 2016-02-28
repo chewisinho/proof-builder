@@ -88,6 +88,7 @@ SSSPostulate.contents = function() {
     return "SSS Postulate: " + self.triangle1.toString() + " and " + self.triangle2.toString() + " are congruent.";
 }
 
+
 // EXPORT FILE
 
 define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle', '../Properties/Congruence'],
