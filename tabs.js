@@ -33,7 +33,7 @@ function loadTheorems() {
     for (var i = 0; i < theoremList.length; i++) {
         addTheorem(theoremList[i]);
     };
-    loadProof(makeExercise1());
+    loadProof(makeExercise2());
 };
 
 // for adding a theorem to the 'current theorems' tab
@@ -142,6 +142,7 @@ function refreshGivens() {
     };
     if (proof.proofComplete()) {
         alert("Congratulations, you have proved the theorem!");
+        proof.complete = true;
     };
 };
 
@@ -193,8 +194,15 @@ function saveCurrentProof() {
         steps.push(currSteps[i]);
     }
 
-    addSave(new Save(givens, goals, steps, points, lineSegments,
-                     angles, triangles, congruences, triangleCongruences));
+    var newSave = new Save(givens, goals, steps, points, lineSegments,
+                    angles, triangles, congruences, triangleCongruences);
+    newSave.name = proof.name;
+    newSave.proofComplete = proof.proofComplete;
+    if (proof.hasOwnProperty('complete')) {
+        newSave.complete = true;
+    }
+    addSave(newSave);
+
 }
 
 // adds a save to the saves array
@@ -210,8 +218,8 @@ function appendSave(save) {
     var pfSave = document.createElement('div');
     pfSave.setAttribute('class','save-li');
     pfSave.innerHTML = save.name;
-    if (save.proofComplete) {
-        pfSave.innerHTML += ' \u2713';
+    if (save.hasOwnProperty('complete')) {
+        pfSave.innerHTML = '\u2713 ' + pfSave.innerHTML;
     }
 
     list.appendChild(pfSave);
