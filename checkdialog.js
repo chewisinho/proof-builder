@@ -45,6 +45,7 @@ var CheckDialog = function(id, options, callback) {
 
 CheckDialog.prototype.readInput = function(callback) {
     var form = sel('form');
+    console.log(form.childNodes);
     var inputs = form.childNodes;
     var result = [];
     for (var i = 0; i < inputs.length; i++) {
