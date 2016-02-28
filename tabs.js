@@ -31,7 +31,7 @@ function loadProof(save) {
 
 function setImage(img) {
     var frame = sel('#results-content');
-    if (frame) {
+    if (frame && img) {
         img.style.marginTop = '10px';
         frame.appendChild(img);
     }

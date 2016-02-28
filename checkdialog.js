@@ -19,9 +19,11 @@ var CheckDialog = function(id, options, callback) {
     var checkbuttons = document.createElement('form');
 
     for (var i = 0; i < options.length; i++) {
-        checkbuttons.innerHTML += '<input type="checkbox"' +
+        checkbuttons.innerHTML += '<label><input type="checkbox"' +
                                   ' value="' +
-                                  options[i].toString() + '"/>' + options[i].toString();
+                                  options[i].toString() + '"/>'
+                                  + options[i].toString();
+                                  + '</label><br>';
     }
 
     var submit = document.createElement('button');
