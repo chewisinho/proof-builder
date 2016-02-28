@@ -1,9 +1,9 @@
 const WIDTH_PROPORTION = 0.7;   // Proportions of canvas to the window frame
 const HEIGHT_PROPORTION = 0.95;
 
-var state; // Canvas state
+var state; // The canvas state
 
-// Set size of canvas to fill frame.
+// Set size of canvas to fill frame
 var canvas = sel("canvas");
 fitCanvas();
 window.onresize = function() {
@@ -22,13 +22,12 @@ function fitCanvas() {
 }
 
 // Types
-var Point, LineSegment, Triangle;
-var CanvasState, GraphicPoint, GraphicLineSegment;
-var Theorem, points, lineSegments, triangles, congruences,
-    addLineSegment, reflexivePropertyConditions, reflexivePropertyResults,
-    reflexiveProperty, midpointSplittingTheoremConditions, midpointSplittingTheoremResults,
-    midpointSplittingTheorem, SSSPostulateConditions, SSSPostulateResults,
-    SSSPostulate;
+var CanvasState, GraphicLineSegment, GraphicPoint;
+var LineSegment, Point, Theorem, Triangle;
+var congruences, lineSegments, points, triangles;
+var addLineSegment;
+var midpointSplittingTheorem, reflexiveProperty, SSSPostulate;
+var theoremList = [midpointSplittingTheorem, reflexiveProperty, SSSPostulate];
 
 // Import
 require(['Objects/Point'], function(p) {
@@ -48,19 +47,16 @@ require(['Objects/Point'], function(p) {
 
             require(['Theorems/Theorem.js'], function(s) {
                 Theorem = s.Thm;
+
                 points = s.pts;
                 lineSegments = s.lsgs;
                 triangles = s.tris;
                 congruences = s.congrs;
+
                 addLineSegment = s.addl;
-                reflexivePropertyConditions = s.reflC;
-                reflexivePropertyResults = s.reflR;
+
                 reflexiveProperty = s.reflP;
-                midpointSplittingTheoremConditions = s.mstC;
-                midpointSplittingTheoremResults = s.mstR;
                 midpointSplittingTheorem = s.mst;
-                SSSPostulateConditions = s.sssC;
-                SSSPostulateResults = s.sssR;
                 SSSPostulate = s.sss;
 
                 main();
@@ -89,11 +85,10 @@ function main() {
     var trCBD = new Triangle(C, B, D);
     console.log(trABD);
     console.log(trCBD);
+    // console.log(typeof addLineSegment);
     var AC = addLineSegment(A, C)
     AC.midpoint = B;
     console.log(AC);
     console.log(AC.midpoint);
-
-    // TESTING THE ACTUAL PROOF
-
+    
 }

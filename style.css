@@ -72,9 +72,34 @@ body, html {
     background: red;
 }
 
-/* temp selector for the draggable div */
-#dragtest {
+/* header for the builder pane */
+#builder-header {
     background: white;
-    width: 100px;
     height: 100px;
+    width: 100%;
+}
+
+#builder-header > div {
+    width: 50%;
+    height: 100%;
+}
+
+#builder-header h3 {
+    color: #dddddd;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+#builder-header #givens {
+    background:#33839E;
+    float: left;
+}
+
+#builder-header #results {
+    background: #256074;
+    float: right;
+}
+
+canvas {
+    position: fixed;
 }
