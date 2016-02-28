@@ -35,6 +35,7 @@ var lineSegmentEquals, createLineSegment, case_insensitive_comp, createAngle,
     createTriangle, createPoint;
 var midpointSplittingTheorem, reflexiveProperty, SSSPostulate;
 var theoremList;
+var makeExercise1;
 
 // Import
 require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'],
@@ -78,6 +79,8 @@ require(['Objects/Point', 'Objects/Angle', 'Properties/TriangleCongruence'],
                 midpointSplittingTheorem = s.mst;
                 SSSPostulate = s.sss;
 
+                makeExercise1 = s.mkex1;
+
                 theoremList = [midpointSplittingTheorem, reflexiveProperty, SSSPostulate];
                 main();
             });
@@ -94,33 +97,6 @@ function main() {
     // state.addShape(new GraphicLineSegment(A, B));
     // state.addShape(A);
     // state.addShape(B);
-
-    // BEGIN PROOF IMPLEMENTATION TESTING
-
-    // GIVEN INFORMATION
-    var A = createPoint('A');
-    var B = createPoint('B');
-    var C = createPoint('C');
-    var D = createPoint('D');
-    var trABD = createTriangle(A, B, D);
-    givens.push(new TriangleGiven(trABD));
-    var trCBD = createTriangle(C, B, D);
-    givens.push(new TriangleGiven(trCBD));
-    var AD = createLineSegment(A, D);
-    var CD = createLineSegment(C, D);
-    congruences.addCongruence(AD, CD);
-    var startCong = new Given(AD, CD);
-    startCong.generate('congruent');
-    givens.push(startCong);
-    var AC = createLineSegment(A, C);
-    AC.midpoint = B;
-    givens.push(new MidpointGiven(AC, B));
-    proofComplete = function() {
-        return triangleCongruences.searchCongruences(trABD, trCBD);
-    };
-    var goal = new Given(trABD, trCBD);
-    goal.generate('congruent');
-    goals.push(goal);
 
     loadTheorems();
 };
