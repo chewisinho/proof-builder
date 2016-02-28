@@ -4,35 +4,47 @@
  * theorems..
  */
 
-var counter = 0; // remove later
 var selectedThm = null; // the currently selected theorem (DOM element)
 
-// gets element by id/class
-function sel(s) {
-    return document.querySelector(s);
+/*
+ * Loads the theorems into the theorem sidebar
+ */
+function loadTheorems() {
+    for (var i = 0; i < theoremList.length; i++) {
+        addTheorem(theoremList[i]);
+    }
 }
 
 // for adding a theorem to the 'current theorems' tab
-function addTheorem() {
+function addTheorem(thm) {
     var currThms = sel("#curr-theorems-content");
     var newThm = document.createElement("div");
 
-    newThm.name = "thm" + counter; // TODO make this a unique identifier
+    // pass in theorem info
+    newThm.innerHTML = thm.shortName;
 
     // change the selected theorem to the one clicked
     newThm.onclick = function() {
-        if (selectedThm) sel("#sel-thm").id = ""; // reset selected divs
+        // reset selected divs
+        if (selectedThm) sel("#sel-thm").id = "";
 
         // apply selected div id to the one clicked on
-        selectedThm = newThm.name;
+        selectedThm = newThm.innerHTML;
         newThm.id = "sel-thm";
     }
-
-    newThm.innerHTML = "theorem" + counter++; // TODO edit this for actual program
 
     // set class to apply CSS, add to the div
     newThm.setAttribute("class","theorem-li");
     currThms.appendChild(newThm);
+}
+
+/*
+ * Applies the theorem
+ */
+function applyTheorem(theorem) {
+    // look here sinho
+    if (selectedThm)
+        sel("#proof-bench").innerHTML = selectedThm;
 }
 
 /*
@@ -46,19 +58,26 @@ function setHandlers() {
     var currThms = sel("#curr-theorems-content");
     var builtThms = sel("#built-theorems-content");
 
+    var proofArea = sel("#builder-footer");
+
     // ASSIGN HANDLERS:
 
     // if clicking current thms button, toggle
     currThmsButton.onclick = function() {
         currThms.style.display = "block";
         builtThms.style.display = "none";
-        addTheorem();
     }
 
     // if clicking built thms button, toggle
     builtThmsButton.onclick = function() {
         currThms.style.display = "none";
         builtThms.style.display = "block";
+    }
+
+    // clicking on the build area will trigger the
+    // applyTheorem() method of the selected theorem
+    proofArea.onclick = function() {
+        applyTheorem(selectedThm);
     }
 }
 
