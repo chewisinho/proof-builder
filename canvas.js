@@ -47,4 +47,21 @@ function main() {
     state.addShape(new GraphicLineSegment(A, B));
     state.addShape(A);
     state.addShape(B);
+
+    // BEGIN PROOF IMPLEMENTATION TESTING
+    /*
+    // GIVEN INFORMATION
+    var A = new Point('A');
+    var B = new Point('B');
+    var C = new Point('C');
+    var D = new Point('D');
+    var trABD = new Triangle(A, B, D);
+    var trCBD = new Triangle(C, B, D);
+    console.log(trABC);
+    console.log(trCBD);
+    var AC = addLineSegment(A, C)
+    AC.midpoint = B;
+    console.log(AC);
+    console.log(AC.midpoint);
+    */
 }
