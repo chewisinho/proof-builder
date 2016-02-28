@@ -23,6 +23,7 @@ var Theorem = function(name) {
 
 var points = new Array();
 var lineSegments = new Array();
+var angles = new Array();
 var triangles = new Array();
 var congruences = new Congruence();
 
@@ -41,6 +42,20 @@ var createLineSegment = function(pt1, pt2) {
 
 function case_insensitive_comp(strA, strB) {
     return strA.toLowerCase().localeCompare(strB.toLowerCase());
+}
+
+function createAngle(ls1,ls2,cp){
+    this.name = cp.toString();
+    this.name2 = Angle.findcp(ls1,ls2);
+    for(var i=0;i<angles.length;i++){
+        if(name === angles[i].toString() || name2 === angles[i].toString()){
+            return angles[i];
+        }else{
+            var a1 = new Angle(ls1,ls2,cp);
+            angles.push(a1);
+            return a1;
+        }
+    }
 }
 
 function createTriangle(p1, p2, p3) {
