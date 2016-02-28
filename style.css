@@ -139,3 +139,26 @@ canvas {
     background: #256074;
     border-bottom: 1px solid black;
 }
+
+button#save {
+    padding:0;
+    margin:0;
+    border:0;
+    outline:0;
+    width:50%;
+    height: 100%;
+}
+
+/* proof save list elements */
+.save-li {
+    padding: 10px 5px;
+    display:block;
+    width:100%;
+    background:yellow;
+    border-bottom:1px solid black;
+    cursor: pointer;
+}
+
+.save-li:hover {
+    background: #CCCC00;
+}

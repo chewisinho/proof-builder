@@ -86,23 +86,23 @@ function createAngle(ls1,ls2,cp){
 
 function createTriangle(p1, p2, p3) {
     // Check if the Triangle already exists.
-    var name = [p1.toString(), p2.toString(), p3.toString()];
-    name = name.sort(case_insensitive_comp);
-    name = name.join("");
-    for (var i = 0; i < triangles.length; i += 1) {
-        var tName = triangles[i].name;
-        tName = tName.split("");
-        tName.sort(case_insensitive_comp);
-        tName.join("");
-        if (name === tName) {
-            return triangles[i];
-        };
-    };
+    // var name = [p1.toString(), p2.toString(), p3.toString()];
+    // name = name.sort(case_insensitive_comp);
+    // name = name.join("");
+    // for (var i = 0; i < triangles.length; i += 1) {
+    //     var tName = triangles[i].name;
+    //     tName = tName.split("");
+    //     tName.sort(case_insensitive_comp);
+    //     tName.join("");
+    //     if (name === tName) {
+    //         return triangles[i];
+    //     };
+    // };
     var tr = new Triangle(p1, p2, p3);
     tr.lineSegments = [createLineSegment(p1, p2), createLineSegment(p2, p3), createLineSegment(p3, p1)];
-    tr.angles.push(new Angle(tr.lineSegments[0], tr.lineSegments[1]), tr.P2);
-    tr.angles.push(new Angle(tr.lineSegments[1], tr.lineSegments[2]), tr.P3);
-    tr.angles.push(new Angle(tr.lineSegments[2], tr.lineSegments[0]), tr.P1);
+    // tr.angles.push(new Angle(tr.lineSegments[0], tr.lineSegments[1]), tr.P2);
+    // tr.angles.push(new Angle(tr.lineSegments[1], tr.lineSegments[2]), tr.P3);
+    // tr.angles.push(new Angle(tr.lineSegments[2], tr.lineSegments[0]), tr.P1);
     triangles.push(tr);
     return tr;
 }
@@ -171,8 +171,16 @@ SSSPostulate.checkConditions = function(triangles) {
         for (var j = 0; j < 3; j += 1) {
             var side2 = triangles[1].lineSegments[j];
             if (congruences.searchCongruences(side1, side2)) {
-                this.sides1.push(side1);
-                this.sides2.push(side2);
+                var alreadySeen = false;
+                for (var k = 0; k < this.sides2.length; k += 1) {
+                    if (side2 === this.sides2[k]) {
+                        alreadySeen = true;
+                    };
+                };
+                if (!alreadySeen) {
+                    this.sides1.push(side1);
+                    this.sides2.push(side2);
+                };
             };
         };
     };
@@ -306,8 +314,49 @@ function makeExercise1() {
     var save = new Save(givens, goals, [], points, lineSegments,
                     angles, triangles, congruences, triangleCongruences);
 
+    save.name = "Exercise 1";
     save.proofComplete = function() {
         return this.triangleCongruences.searchCongruences(trABD, trCBD);
+    };
+
+    return save; 
+    
+}
+
+function makeExercise2() {
+
+    clearGlobalVariables();
+
+    var R = createPoint('R');
+    var S = createPoint('S');
+    var T = createPoint('T');
+    var RS = createLineSegment(R, S);
+    var RT = createLineSegment(R, T);
+    var trRST = createTriangle(R, S, T);
+    var trRTS = createTriangle(R, T, S);
+
+    congruences = new Congruence();
+    congruences.addCongruence(RS, RT);
+    triangleCongruences = new TriangleCongruence();
+
+    var givens = new Array();
+    var startCong = new Given(RS, RT);
+    startCong.generate('congruent');
+    givens.push(startCong);
+    givens.push(new TriangleGiven(trRST));
+    givens.push(new TriangleGiven(trRTS));
+
+    var goals = Array();
+    var goal = new Given(trRST, trRTS);
+    goal.generate('congruent');
+    goals.push(goal);
+
+    var save = new Save(givens, goals, [], points, lineSegments,
+                    angles, triangles, congruences, triangleCongruences);
+
+    save.name = "Exercise 2";
+    save.proofComplete = function() {
+        return this.triangleCongruences.searchCongruences(trRST, trRTS);
     };
 
     return save; 
@@ -343,7 +392,7 @@ define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
         lse: lineSegmentEquals, addl: createLineSegment, csc: case_insensitive_comp,
         ca: createAngle, ct: createTriangle, cp: createPoint,
 
-        mkex1: makeExercise1,
+        mkex1: makeExercise1, mkex2: makeExercise2,
 
         reflP: reflexiveProperty, mst: midpointSplittingTheorem, sss: SSSPostulate
 

@@ -22,6 +22,8 @@ function loadProof(save) {
     congruences = save.congruences;
     triangleCongruences = save.triangleCongruences;
     proof = save;
+    refreshGivens();
+    addGoal();
 }
 
 /*
@@ -31,9 +33,7 @@ function loadTheorems() {
     for (var i = 0; i < theoremList.length; i++) {
         addTheorem(theoremList[i]);
     };
-    loadProof(makeExercise1());
-    refreshGivens();
-    addGoal();
+    loadProof(makeExercise2());
 };
 
 // for adding a theorem to the 'current theorems' tab
@@ -142,6 +142,7 @@ function refreshGivens() {
     };
     if (proof.proofComplete()) {
         alert("Congratulations, you have proved the theorem!");
+        proof.complete = true;
     };
 };
 
@@ -175,6 +176,63 @@ function setHandlers() {
     proofArea.onclick = function() {
         applyTheorem(selectedThm);
     }
+
+    setProveTheoremHandlers();
 }
 
 setHandlers();
+
+// PROVE THEOREMS TAB -- SAVES //
+var saves = new Array(); // idk?
+
+function saveCurrentProof() {
+    var currSteps = sel('#curr-steps').childNodes;
+    var steps = new Array(); // to hold the steps
+
+    // load all steps into steps Array
+    for (var i = 1; i <= currSteps.length; i++) {
+        steps.push(currSteps[i]);
+    }
+
+    var newSave = new Save(givens, goals, steps, points, lineSegments,
+                    angles, triangles, congruences, triangleCongruences);
+    newSave.name = proof.name;
+    newSave.proofComplete = proof.proofComplete;
+    if (proof.hasOwnProperty('complete')) {
+        newSave.complete = true;
+    }
+    addSave(newSave);
+
+}
+
+// adds a save to the saves array
+function addSave(save) {
+    saves.push(save);
+    appendSave(save);
+}
+
+// appends a save to the Prove Theorems tab
+function appendSave(save) {
+    var list = sel('#built-theorems-content');
+
+    var pfSave = document.createElement('div');
+    pfSave.setAttribute('class','save-li');
+    pfSave.innerHTML = save.name;
+    if (save.hasOwnProperty('complete')) {
+        pfSave.innerHTML = '\u2713 ' + pfSave.innerHTML;
+    }
+
+    list.appendChild(pfSave);
+}
+
+function appendAllSaves() {
+    // loop through saves array and append to the tab
+    for (var i = 0; i < saves.length; i++) {
+        appendSave(saves[i]);
+    }
+}
+
+function setProveTheoremHandlers() {
+    var saveButton = sel('button#save')
+    saveButton.onclick = saveCurrentProof;
+}
