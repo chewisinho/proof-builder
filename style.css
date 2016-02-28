@@ -55,22 +55,22 @@ body, html {
 }
 
 /* theorem list elements */
-.theorem-li {
+.theorem-li, .save-li {
     padding: 10px 5px;
     display:block;
     width:100%;
-    background:yellow;
+    background: #58AFA7;
     border-bottom:1px solid black;
     cursor: pointer;
 }
 
-.theorem-li:hover {
-    background: #CCCC00;
+.theorem-li:hover, .save-li:hover {
+    background: #65C5BD;
 }
 
 
-#sel-thm {
-    background: red;
+#sel-thm, #sel-save {
+    background: #A2D9F5;
 }
 
 /* header for the builder pane */
@@ -101,7 +101,7 @@ body, html {
 }
 
 #builder-header #results {
-    background: #256074;
+    background: #31758C;
     float: right;
 }
 
@@ -142,24 +142,23 @@ canvas {
 }
 
 button#save {
+    background: white;
     padding:0;
     margin:0;
     border:0;
     outline:0;
-    width:50%;
-    height: 100%;
+    width:100%;
+    height: 50px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
-/* proof save list elements */
-.save-li {
-    padding: 10px 5px;
-    display:block;
-    width:100%;
-    background:yellow;
-    border-bottom:1px solid black;
+button#save:hover {
+    background: #DDDDDD;
     cursor: pointer;
 }
 
-.save-li:hover {
-    background: #CCCC00;
+button:active {
+    background: #256074 !important;
+    color:white;
 }
