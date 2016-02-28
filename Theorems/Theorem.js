@@ -11,6 +11,7 @@ var Congruence;
 var Theorem = function(name) {
     this.checkCondition = function() { };
     this.applyResult = function() { };
+    this.getInput = function() { };
     this.shortName = name;
     this.contents = name;
 }
@@ -50,6 +51,9 @@ reflexiveProperty.applyResults = function(obj) {
 };
 reflexiveProperty.contents = function() {
     return "Reflexive Property: " + this.obj.toString() + " is congruent to itself.";
+};
+reflexiveProperty.getInput = function() {
+    return [lineSegments, 2];
 };
 
 var midpointSplittingTheorem = new Theorem("Midpoint Splitting Theorem");

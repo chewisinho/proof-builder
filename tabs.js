@@ -42,6 +42,8 @@ function addTheorem(thm) {
  * Applies the theorem
  */
 function applyTheorem(theorem) {
+
+    // Find theorem
     var thm;
     for (var i = 0; i < theoremList.length; i += 1) {
         var th = theoremList[i];
@@ -49,10 +51,12 @@ function applyTheorem(theorem) {
             thm = th;
         }
     }
-    console.log(thm);
-    // look here sinho
-    if (selectedThm)
-        addStep(selectedThm);
+
+    var options = thm.getInput()[0];
+    console.log("First option " + options[0]);
+    var numOptions = thm.getInput()[1];
+    var box = new CheckDialog('selectionBox', options, []);
+    box.open();
 
 }
 
