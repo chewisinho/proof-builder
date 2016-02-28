@@ -189,7 +189,7 @@ function saveCurrentProof() {
     var steps = new Array(); // to hold the steps
 
     // load all steps into steps Array
-    for (var i = 0; i < currSteps.length; i++) {
+    for (var i = 1; i <= currSteps.length; i++) {
         steps.push(currSteps[i]);
     }
 
@@ -197,15 +197,34 @@ function saveCurrentProof() {
                      angles, triangles, congruences, triangleCongruences));
 }
 
+// adds a save to the saves array
 function addSave(save) {
     saves.push(save);
-    console.log("Saved!");
-    console.log(saves);
+    appendSave(save);
+}
+
+// appends a save to the Prove Theorems tab
+function appendSave(save) {
+    var list = sel('#built-theorems-content');
+
+    var pfSave = document.createElement('div');
+    pfSave.setAttribute('class','save-li');
+    pfSave.innerHTML = save.name;
+    if (save.proofComplete) {
+        pfSave.innerHTML += ' \u2713';
+    }
+
+    list.appendChild(pfSave);
+}
+
+function appendAllSaves() {
+    // loop through saves array and append to the tab
+    for (var i = 0; i < saves.length; i++) {
+        appendSave(saves[i]);
+    }
 }
 
 function setProveTheoremHandlers() {
-    // TODO continue
-    var saveButton = document.createElement('button');
-    saveButton.id = 'save';
-
+    var saveButton = sel('button#save')
+    saveButton.onclick = saveCurrentProof;
 }

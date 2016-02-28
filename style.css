@@ -148,3 +148,17 @@ button#save {
     width:50%;
     height: 100%;
 }
+
+/* proof save list elements */
+.save-li {
+    padding: 10px 5px;
+    display:block;
+    width:100%;
+    background:yellow;
+    border-bottom:1px solid black;
+    cursor: pointer;
+}
+
+.save-li:hover {
+    background: #CCCC00;
+}
