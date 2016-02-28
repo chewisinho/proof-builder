@@ -26,6 +26,16 @@ function loadProof(save) {
     addAllSteps(steps);
     refreshGivens();
     addGoal();
+    setImage(save.image);
+}
+
+function setImage(img) {
+    var frame = sel('#results-content');
+    if (frame && img) {
+        img.style.marginTop = '10px';
+        console.log('loading ' + img);
+        frame.appendChild(img);
+    }
 }
 
 /*
@@ -52,8 +62,8 @@ function addTheorem(thm) {
         if (selectedThm) sel("#sel-thm").id = "";
 
         // apply selected div id to the one clicked on
-        selectedThm = newThm.innerHTML;
-        newThm.id = "sel-thm";
+        selectedThm = this.innerHTML;
+        this.id = "sel-thm";
     }
 
     // set class to apply CSS, add to the div
@@ -63,11 +73,13 @@ function addTheorem(thm) {
 
 function checkInputs(inputs, numInputs, objList, theorem) {
 
+    console.log(inputs);
     filteredInputs = [];
     for (var i = 0; i < inputs.length; i += 1) {
         if (inputs[i])
             filteredInputs.push(i);
     };
+    console.log(filteredInputs);
     if (!(filteredInputs.length === numInputs)) {
         alert("Not the right number of inputs for this theorem!");
     } else {
@@ -215,12 +227,13 @@ function saveCurrentProof() {
 
     // load all steps into steps Array
     for (var i = 0; i < currSteps.length; i++) {
-        steps.push(currSteps[i]);
+        steps.push(currSteps[i].innerHTML);
     }
 
     var newSave = new Save(givens, goals, steps, points, lineSegments,
                     angles, triangles, congruences, triangleCongruences);
     newSave.name = proof.name;
+    newSave.image = sel('#results-content').childNodes[2] || undefined;
     newSave.proofComplete = proof.proofComplete;
     if (proof.hasOwnProperty('complete')) {
         newSave.complete = true;

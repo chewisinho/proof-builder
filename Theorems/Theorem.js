@@ -262,7 +262,7 @@ ASAPostulate.checkConditions = function(triange1,triangle2) {
 					for(var pt2 in ls2){
 						if(congruences.searchCongruences(pt,pt2)){
 							this.num_angles+=1;
-						}	
+						}
 					}
 				}
 				if(this.num_angles===2){
@@ -299,7 +299,7 @@ TransitiveProperty.applyResults = function (){
 	if(TransitiveProperty.checkConditions(a,b,c)){
 		if(!congruences.searchCongruences(a,c)){
 			congruences.addCongruence(a,c);
-		} 
+		}
 	}
 }
 TransitiveProperty.contents = function (){
@@ -370,8 +370,13 @@ function makeExercise1() {
         return this.triangleCongruences.searchCongruences(trABD, trCBD);
     };
 
-    return save; 
-    
+    // load image
+    var img = new Image();
+    img.src = './resources/ex_1.png';
+    save.image = img;
+
+    return save;
+
 }
 
 function makeExercise2() {
@@ -410,8 +415,12 @@ function makeExercise2() {
         return this.triangleCongruences.searchCongruences(trRST, trRTS);
     };
 
-    return save; 
-    
+    var img = new Image();
+    img.src = './resources/ex_2.png';
+    save.image = img;
+
+    return save;
+
 }
 
 function makeExercise3() {
@@ -461,8 +470,8 @@ function makeExercise3() {
         return this.triangleCongruences.searchCongruences(trABD, trCBD);
     };
 
-    return save; 
-    
+    return save;
+
 };
 
 // EXPORT FILE

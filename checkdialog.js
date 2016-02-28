@@ -19,9 +19,11 @@ var CheckDialog = function(id, options, callback) {
     var checkbuttons = document.createElement('form');
 
     for (var i = 0; i < options.length; i++) {
-        checkbuttons.innerHTML += '<input type="checkbox"' +
+        checkbuttons.innerHTML += '<label><input type="checkbox"' +
                                   ' value="' +
-                                  options[i].toString() + '"/>' + options[i].toString();
+                                  options[i].toString() + '"/>'
+                                  + options[i].toString();
+                                  + '</label><br>';
     }
 
     var submit = document.createElement('button');
@@ -38,11 +40,14 @@ var CheckDialog = function(id, options, callback) {
 
 CheckDialog.prototype.readInput = function(callback) {
     var form = sel('form');
+    console.log(form.childNodes);
     var inputs = form.childNodes;
     var result = [];
     for (var i = 0; i < inputs.length; i++) {
-        if (inputs[i].checked !== undefined)
-            result.push(inputs[i].checked);
+        var box = inputs[i].childNodes[0];
+        console.log(box);
+        if (box.checked !== undefined)
+            result.push(box.checked);
     }
 
     callback(result);

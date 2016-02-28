@@ -162,3 +162,8 @@ button:active {
     background: #256074 !important;
     color:white;
 }
+
+label {
+    display: block;
+    margin: 10px 0;
+}
