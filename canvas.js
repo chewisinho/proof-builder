@@ -30,7 +30,7 @@ function fitCanvas() {
 var CanvasState, GraphicLineSegment, GraphicPoint;
 var Angle, LineSegment, Point, Theorem, Triangle;
 var congruences, lineSegments, points, triangles;
-var addLineSegment;
+var createLineSegment;
 var midpointSplittingTheorem, reflexiveProperty, SSSPostulate;
 var theoremList;
 
@@ -59,7 +59,7 @@ require(['Objects/Point', 'Objects/Angle'], function(p, a) {
                 triangles = s.tris;
                 congruences = s.congrs;
 
-                addLineSegment = s.addl;
+                createLineSegment = s.addl;
 
                 reflexiveProperty = s.reflP;
                 midpointSplittingTheorem = s.mst;
@@ -90,7 +90,7 @@ function main() {
     var D = createPoint('D');
     var trABD = createTriangle(A, B, D);
     var trCBD = createTriangle(C, B, D);
-    var AC = addLineSegment(A, C)
+    var AC = createLineSegment(A, C)
     AC.midpoint = B;
 
     loadTheorems();

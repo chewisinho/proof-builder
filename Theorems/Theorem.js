@@ -24,6 +24,7 @@ var Theorem = function(name) {
 
 var points = new Array();
 var lineSegments = new Array();
+var angles = new Array();
 var triangles = new Array();
 var congruences = new Congruence();
 var triangleCongruences = new TriangleCongruence();
@@ -33,7 +34,7 @@ function lineSegmentEquals(segment1, segment2) {
         (segment1.start === segment1.end && segment1.end === segment2.start));
 }
 
-var addLineSegment = function(pt1, pt2) {
+var createLineSegment = function(pt1, pt2) {
     for (var i = 0; i < lineSegments.length; i += 1) {
         if ((lineSegments[i].start === pt1 && lineSegments[i].end === pt2) ||
             (lineSegments[i].start === pt2 && lineSegments[i].end === pt1)) {
@@ -47,6 +48,20 @@ var addLineSegment = function(pt1, pt2) {
 
 function case_insensitive_comp(strA, strB) {
     return strA.toLowerCase().localeCompare(strB.toLowerCase());
+}
+
+function createAngle(ls1,ls2,cp){
+    this.name = cp.toString();
+    this.name2 = Angle.findcp(ls1,ls2);
+    for(var i=0;i<angles.length;i++){
+        if(name === angles[i].toString() || name2 === angles[i].toString()){
+            return angles[i];
+        }else{
+            var a1 = new Angle(ls1,ls2,cp);
+            angles.push(a1);
+            return a1;
+        }
+    }
 }
 
 function createTriangle(p1, p2, p3) {
@@ -64,7 +79,7 @@ function createTriangle(p1, p2, p3) {
         };
     };
     var tr = new Triangle(p1, p2, p3);
-    tr.lineSegments = [addLineSegment(p1, p2), addLineSegment(p2, p3), addLineSegment(p2, p3)];
+    tr.lineSegments = [createLineSegment(p1, p2), createLineSegment(p2, p3), createLineSegment(p2, p3)];
     tr.angles.push(new Angle(tr.lineSegments[0], tr.lineSegments[1]), tr.P2);
     tr.angles.push(new Angle(tr.lineSegments[1], tr.lineSegments[2]), tr.P3);
     tr.angles.push(new Angle(tr.lineSegments[2], tr.lineSegments[0]), tr.P1);
@@ -110,8 +125,8 @@ midpointSplittingTheorem.checkConditions = function(lines) {
 midpointSplittingTheorem.applyResults = function(lines) {
     var lineSegment = lines[0];
     this.lineSegment = lines[0];
-    this.ls1 = addLineSegment(lineSegment.start, lineSegment.midpoint);
-    this.ls2 = addLineSegment(lineSegment.midpoint, lineSegment.end);
+    this.ls1 = createLineSegment(lineSegment.start, lineSegment.midpoint);
+    this.ls2 = createLineSegment(lineSegment.midpoint, lineSegment.end);
     congruences.addCongruence(this.ls1, this.ls2);
 };
 midpointSplittingTheorem.contents = function() {
@@ -242,7 +257,7 @@ define(['../Objects/Point', '../Objects/LineSegment', '../Objects/Triangle',
 
             pts: points, lsgs: lineSegments, tris: triangles, congrs: congruences,
 
-            addl: addLineSegment,
+            addl: createLineSegment,
 
             reflP: reflexiveProperty, mst: midpointSplittingTheorem, sss: SSSPostulate
 
