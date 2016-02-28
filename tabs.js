@@ -26,6 +26,15 @@ function loadProof(save) {
     addAllSteps(steps);
     refreshGivens();
     addGoal();
+    setImage(save.image);
+}
+
+function setImage(img) {
+    var frame = sel('#results-content');
+    if (frame) {
+        img.style.marginTop = '10px';
+        frame.appendChild(img);
+    }
 }
 
 /*
