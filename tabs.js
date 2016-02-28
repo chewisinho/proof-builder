@@ -22,6 +22,7 @@ function loadProof(save) {
     congruences = save.congruences;
     triangleCongruences = save.triangleCongruences;
     proof = save;
+    addAllSteps(steps);
     refreshGivens();
     addGoal();
 }
@@ -33,7 +34,7 @@ function loadTheorems() {
     for (var i = 0; i < theoremList.length; i++) {
         addTheorem(theoremList[i]);
     };
-    loadProof(makeExercise2());
+    // loadProof(makeExercise2());
 };
 
 // for adding a theorem to the 'current theorems' tab
@@ -77,7 +78,7 @@ function checkInputs(inputs, numInputs, objList, theorem) {
             alert("The theorem doesn't apply here!");
         } else {
             theorem.applyResults(objs);
-            addStep(theorem);
+            addStep(theorem.contents());
             refreshGivens();
         }
     };
@@ -115,10 +116,17 @@ function addStep(step) {
     var currSteps = sel("#curr-steps");
     var newStep = document.createElement('div');
 
-    newStep.innerHTML = step.contents();
+    newStep.innerHTML = step;
     newStep.setAttribute('class', 'step-li');
 
     currSteps.appendChild(newStep);
+}
+
+function addAllSteps(steps) {
+    sel("#curr-steps").innerHTML = '';
+    for (var i = 0; i < steps.length; i++) {
+        addStep(steps[i].innerHTML);
+    }
 }
 
 /*
@@ -194,8 +202,10 @@ function initSaves() {
     var ex1 = makeExercise1();
     var ex2 = makeExercise2();
 
-    addSave(ex1);
-    addSave(ex2);
+    saves.push(ex1);
+    saves.push(ex2);
+
+    refreshSaves();
 }
 
 function saveCurrentProof() {
@@ -203,7 +213,7 @@ function saveCurrentProof() {
     var steps = new Array(); // to hold the steps
 
     // load all steps into steps Array
-    for (var i = 1; i <= currSteps.length; i++) {
+    for (var i = 0; i < currSteps.length; i++) {
         steps.push(currSteps[i]);
     }
 
@@ -215,18 +225,23 @@ function saveCurrentProof() {
         newSave.complete = true;
     }
 
-    for (var k = 0; k < saves.length; saves += 1) {
+    var flag = false;
+    for (var k = 0; k < saves.length; k += 1) {
         if (saves[k].name === proof.name) {
             saves[k] = newSave;
+            flag = true;
         };
     };
 
-    addSave(newSave);
+    if (!flag) {
+        saves.push(newSave);
+    }
 
+    refreshSaves();
 }
 
 // adds a save to the saves array
-function addSave(save) {
+function addSave(save, index) {
     saves.push(save);
     appendSave(save);
 }
@@ -245,7 +260,7 @@ function appendSave(save) {
 
     // when we click on the save, load the save data
     pfSave.onclick = function() {
-        loadProof(pfSave.save);
+        loadProof(save);
     }
 
     list.appendChild(pfSave);
@@ -255,6 +270,31 @@ function appendAllSaves() {
     // loop through saves array and append to the tab
     for (var i = 0; i < saves.length; i++) {
         appendSave(saves[i]);
+    }
+}
+
+function refreshSaves() {
+    var list = sel('#built-theorems-content');
+
+    list.innerHTML = '';
+
+    for (var i = 0; i < saves.length; i++) {
+        var save = saves[i];
+        var pfSave = document.createElement('div');
+        pfSave.setAttribute('class','save-li');
+        pfSave.innerHTML = save.name;
+        pfSave.save = save; // save inside the document object
+        if (save.hasOwnProperty('complete')) {
+            pfSave.innerHTML = '\u2713 ' + pfSave.innerHTML;
+        }
+
+        // when we click on the save, load the save data
+        pfSave.onclick = function() {
+            console.log(this.save);
+            loadProof(this.save);
+        }
+
+        list.appendChild(pfSave);
     }
 }
 
