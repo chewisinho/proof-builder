@@ -161,7 +161,7 @@ function refreshGivens() {
     for (var i = 0; i < givens.length; i += 1) {
         givenPane.innerHTML += givens[i].toString() + '<br>';
     };
-    if (proof.proofComplete()) {
+    if (!proof.complete && proof.proofComplete()) {
         alert("Congratulations, you have proved the theorem!");
         proof.complete = true;
     };
