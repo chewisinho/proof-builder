@@ -33,7 +33,6 @@ function setImage(img) {
     var frame = sel('#results-content');
     if (frame && img) {
         img.style.marginTop = '10px';
-        console.log('loading ' + img);
         frame.appendChild(img);
     }
 }
@@ -222,6 +221,10 @@ function initSaves() {
 }
 
 function saveCurrentProof() {
+    if (!proof) // if no proof to save, do nothing
+        return; // TODO maybe prompt the user to "load a proof before saving"
+                // or disable the save button visually
+
     var currSteps = sel('#curr-steps').childNodes;
     var steps = new Array(); // to hold the steps
 
@@ -232,6 +235,7 @@ function saveCurrentProof() {
 
     var newSave = new Save(givens, goals, steps, points, lineSegments,
                     angles, triangles, congruences, triangleCongruences);
+
     newSave.name = proof.name;
     newSave.image = sel('#results-content').childNodes[2] || undefined;
     newSave.proofComplete = proof.proofComplete;
@@ -273,7 +277,6 @@ function refreshSaves() {
 
         // when we click on the save, load the save data
         pfSave.onclick = function() {
-            console.log('clicked ' + this);
             // reset selected divs
             if (selectedSave) sel("#sel-save").id = "";
 
