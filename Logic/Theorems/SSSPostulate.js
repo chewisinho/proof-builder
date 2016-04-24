@@ -7,7 +7,7 @@ var SSSPostulate = function(objects, congruences) {
 	Theorem.call(this, objects);
 	this.name = "Side-Side-Side Postulate";
 	this.congruences = congruences;
-	this.inputSize = 2;
+	this.requires = {"Triangle": 2};
 };
 
 // Inherit from Theorem

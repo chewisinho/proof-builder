@@ -14,7 +14,7 @@ var MidpointSplittingTheorem = function(objects, midpoints, congruences) {
 	this.name = "Midpoint Splitting Theorem";
 	this.midpoints = midpoints;
 	this.congruences = congruences;
-	this.inputSize = 1;
+	this.requires = {"LineSegment": 1};
 };
 
 // Inherit from Theorem
@@ -42,11 +42,6 @@ MidpointSplittingTheorem.prototype.applyResults = function(segment) {
 	this.result = midpoint.toString() + " splits " + segment +
 				  " into two congruent line segments: " +
 				  ls1.toString() + " and " + ls2.toString() + ".";
-};
-
-// FIXME - figure out how theorems will specify required inputs!
-MidpointSplittingTheorem.prototype.getInput = function() {
-	return ['linesegs', this.inputSize];
 };
 
 module.exports = MidpointSplittingTheorem;

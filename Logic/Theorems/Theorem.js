@@ -7,7 +7,8 @@
  *
  * Fields:
  * name (String)   	- the name of the theorem
- * inputSize (int) 	- the number of inputs for this theorem
+ * requires ({String:int}) - what this theorem requires as input, as a relational
+ *							 array of the object type, and the number needed
  * objects (Object) - reference to the relational array of objects
  * result (String)  - string representation of result when theorem is applied
  * 					  to objects
@@ -16,7 +17,7 @@
  */
 var Theorem = function(objects) {
 	this.name = "Abstract Theorem";
-	this.inputSize = 0;
+	this.requires = {};
 	this.objects = objects;
 	this.result = "Not applied yet.";
 	this.toString = function() { return this.name + ": " + this.result; };

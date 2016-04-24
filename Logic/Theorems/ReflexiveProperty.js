@@ -5,7 +5,7 @@ var ReflexiveProperty = function(objects, congruences) {
 	Theorem.call(this, objects);
 	this.name = "Reflexive Property";
 	this.congruences = congruences;
-	this.inputSize = 1;
+	this.requires = {"LineSegment": 1};
 };
 
 // Inherit from Theorem
@@ -19,10 +19,6 @@ ReflexiveProperty.prototype.checkConditions = function(obj) {
 ReflexiveProperty.prototype.applyResults = function(obj) {
 	congruences.add(obj, obj);
 	this.result = this.name + " " + obj.toString() + " is congruent to itself.";
-};
-
-ReflexiveProperty.prototype.getInput = function() {
-	return ['linesegs', this.inputSize];
 };
 
 module.exports = ReflexiveProperty;
