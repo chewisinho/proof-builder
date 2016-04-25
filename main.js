@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Save = require('../Save');
+var Save = require('../Saving/Save');
 var geo = require('../Logic/Objects/Geometry');
 var ObjectDB = require('../Logic/Objects/ObjectDB');
 var ProofState = require('../Logic/Properties/ProofState');
@@ -28,7 +28,7 @@ goalState.add('congruence', [trABD, trCBD]);
 var Exercise1 = new Save('Exercise 1', objects, givenState, [], goalState);
 module.exports = Exercise1;
 
-},{"../Logic/Objects/Geometry":4,"../Logic/Objects/ObjectDB":6,"../Logic/Properties/ProofState":12,"../Save":17}],2:[function(require,module,exports){
+},{"../Logic/Objects/Geometry":4,"../Logic/Objects/ObjectDB":6,"../Logic/Properties/ProofState":12,"../Saving/Save":17}],2:[function(require,module,exports){
 module.exports = {}; // TODO fill later
 
 },{}],3:[function(require,module,exports){
@@ -321,6 +321,26 @@ Congruences.prototype.add = function(obj1, obj2) {
 	}
 };
 
+Congruences.prototype.toString = function() {
+	var result = "Congruences:\n";
+
+	for (var group in this.congruences) {
+		var list = this.congruences[group];
+		if (list.length == 0) continue;
+		result += ("\t" + group + "s: ");
+		var i;
+		for (i = 0; i < list.length - 1; i++) {
+			result += list[i][0].toString() + Congruences.relation +
+					  list[i][1].toString() + ", ";
+		}
+
+		result += list[i][0].toString() + Congruences.relation +
+				  list[i][1].toString() + "\n";
+	}
+
+	return result;
+};
+
 module.exports = Congruences;
 
 },{}],11:[function(require,module,exports){
@@ -381,6 +401,23 @@ Midpoints.prototype.get = function(point, segment) {
 	}
 };
 
+Midpoints.prototype.toString = function() {
+	if (this.pairs.length == 0) return "";
+	var result = "Midpoints: ";
+
+	var i;
+	for (i = 0; i < this.pairs.length - 1; i++) {
+		result += (this.pairs[i][0] + Midpoints.relation +
+				   this.pairs[i][1]) + ", ";
+	}
+
+	if (i == this.pairs.length - 1)
+		result += (this.pairs[i][0] + Midpoints.relation +
+				   this.pairs[i][1]);
+
+	return result;
+};
+
 module.exports = Midpoints;
 
 },{}],12:[function(require,module,exports){
@@ -434,16 +471,20 @@ ProofState.prototype.contains = function(propertyType, objects) {
  * propertyType (String) - the type of property (e.g. congruence) to get
  * objects ([GeoObject]) - list of geometry objects to get
  */
- ProofState.prototype.get = function(propertyType, objects) {
-	 var group = this.properties[propertyType];
- 	if (group === undefined || group.get === undefined) { // TODO add support for 'get'
- 		console.error("Property " + propertyType + " is not supported in state.");
- 		return undefined;
- 	}
+ProofState.prototype.get = function(propertyType, objects) {
+	var group = this.properties[propertyType];
+	if (group === undefined || group.get === undefined) { // TODO add support for 'get'
+		console.error("Property " + propertyType + " is not supported in state.");
+		return undefined;
+	}
+	// delegate to the group's 'contain' function
+	return group.get.apply(group, objects);
+};
 
- 	// delegate to the group's 'contain' function
- 	return group.get.apply(group, objects);
- };
+ProofState.prototype.toString = function() {
+	return this.properties.congruence.toString() + "\n" +
+		   this.properties.midpoint.toString();
+};
 module.exports = ProofState;
 
 },{"./Congruences":10,"./Midpoints":11}],13:[function(require,module,exports){
@@ -644,6 +685,7 @@ var ProofState = require('./Logic/Properties/ProofState');
 
 // Let's try solving Exercise 1!
 var Exercise1 = require('./Examples/Exercise1');
+console.warn("Loaded", Exercise1.name, "!");
 var objects    = Exercise1.objects,
 	givenState = Exercise1.givens,
 	steps      = Exercise1.steps,
@@ -658,6 +700,11 @@ var sgBD = new geo.LineSegment(new geo.Point('B'), new geo.Point('D'));
 
 var trABD = new geo.Triangle(new geo.Point('A'), new geo.Point('B'), new geo.Point('D'));
 var trCBD = new geo.Triangle(new geo.Point('C'), new geo.Point('B'), new geo.Point('D'));
+
+console.log("Given:", trABD.toString(), trCBD.toString() +
+ 			" and\n" + givenState.toString() + "\n");
+
+console.log("Prove:\n" + goalState.toString());
 
 console.log("== Solved? %s", givenState.contains('congruence', [trABD, trCBD]));
 

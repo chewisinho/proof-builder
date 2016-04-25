@@ -55,4 +55,21 @@ Midpoints.prototype.get = function(point, segment) {
 	}
 };
 
+Midpoints.prototype.toString = function() {
+	if (this.pairs.length == 0) return "";
+	var result = "Midpoints: ";
+
+	var i;
+	for (i = 0; i < this.pairs.length - 1; i++) {
+		result += (this.pairs[i][0] + Midpoints.relation +
+				   this.pairs[i][1]) + ", ";
+	}
+
+	if (i == this.pairs.length - 1)
+		result += (this.pairs[i][0] + Midpoints.relation +
+				   this.pairs[i][1]);
+
+	return result;
+};
+
 module.exports = Midpoints;

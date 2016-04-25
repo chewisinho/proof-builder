@@ -11,6 +11,7 @@ var ProofState = require('./Logic/Properties/ProofState');
 
 // Let's try solving Exercise 1!
 var Exercise1 = require('./Examples/Exercise1');
+console.warn("Loaded", Exercise1.name, "!");
 var objects    = Exercise1.objects,
 	givenState = Exercise1.givens,
 	steps      = Exercise1.steps,
@@ -25,6 +26,11 @@ var sgBD = new geo.LineSegment(new geo.Point('B'), new geo.Point('D'));
 
 var trABD = new geo.Triangle(new geo.Point('A'), new geo.Point('B'), new geo.Point('D'));
 var trCBD = new geo.Triangle(new geo.Point('C'), new geo.Point('B'), new geo.Point('D'));
+
+console.log("Given:", trABD.toString(), trCBD.toString() +
+ 			" and\n" + givenState.toString() + "\n");
+
+console.log("Prove:\n" + goalState.toString());
 
 console.log("== Solved? %s", givenState.contains('congruence', [trABD, trCBD]));
 

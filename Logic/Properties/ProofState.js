@@ -48,14 +48,18 @@ ProofState.prototype.contains = function(propertyType, objects) {
  * propertyType (String) - the type of property (e.g. congruence) to get
  * objects ([GeoObject]) - list of geometry objects to get
  */
- ProofState.prototype.get = function(propertyType, objects) {
-	 var group = this.properties[propertyType];
- 	if (group === undefined || group.get === undefined) { // TODO add support for 'get'
- 		console.error("Property " + propertyType + " is not supported in state.");
- 		return undefined;
- 	}
+ProofState.prototype.get = function(propertyType, objects) {
+	var group = this.properties[propertyType];
+	if (group === undefined || group.get === undefined) { // TODO add support for 'get'
+		console.error("Property " + propertyType + " is not supported in state.");
+		return undefined;
+	}
+	// delegate to the group's 'contain' function
+	return group.get.apply(group, objects);
+};
 
- 	// delegate to the group's 'contain' function
- 	return group.get.apply(group, objects);
- };
+ProofState.prototype.toString = function() {
+	return this.properties.congruence.toString() + "\n" +
+		   this.properties.midpoint.toString();
+};
 module.exports = ProofState;

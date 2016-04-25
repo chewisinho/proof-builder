@@ -41,4 +41,24 @@ Congruences.prototype.add = function(obj1, obj2) {
 	}
 };
 
+Congruences.prototype.toString = function() {
+	var result = "Congruences:\n";
+
+	for (var group in this.congruences) {
+		var list = this.congruences[group];
+		if (list.length == 0) continue;
+		result += ("\t" + group + "s: ");
+		var i;
+		for (i = 0; i < list.length - 1; i++) {
+			result += list[i][0].toString() + Congruences.relation +
+					  list[i][1].toString() + ", ";
+		}
+
+		result += list[i][0].toString() + Congruences.relation +
+				  list[i][1].toString() + "\n";
+	}
+
+	return result;
+};
+
 module.exports = Congruences;
