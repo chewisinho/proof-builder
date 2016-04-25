@@ -4,16 +4,13 @@ var Theorem = require('./Theorem');
 
 /**
  * Midpoint Splitting Theorem constructor.
- * objects ({Array(Point), Array(LineSegment), Array(Angle), Array(Triangle)})
- * 			- relational array of all objects
- * midpoints   (Obj<-Midpoints)   - midpoints of the system
- * congruences (Obj<-Congruences) - congruences of the system
+ * objects (ObjectDB) - database of all objects
+ * givens  (ProofState) - given facts known so far
  */
-var MidpointSplittingTheorem = function(objects, midpoints, congruences) {
+var MidpointSplittingTheorem = function(objects, givens) {
 	Theorem.call(this, objects);
 	this.name = "Midpoint Splitting Theorem";
-	this.midpoints = midpoints;
-	this.congruences = congruences;
+	this.givens = givens;
 	this.requires = {"LineSegment": 1};
 };
 
@@ -27,17 +24,16 @@ MidpointSplittingTheorem.prototype.constructor = MidpointSplittingTheorem;
  */
 MidpointSplittingTheorem.prototype.checkConditions = function(segment) {
 	// search simply for the segment containing a midpoint
-	return this.midpoints.contains(null, segment);
+	return this.givens.contains('midpoint', [null, segment]);
 };
 
 MidpointSplittingTheorem.prototype.applyResults = function(segment) {
-	var pair = this.midpoints.get(null, segment);
+	var pair = this.givens.get('midpoint', [null, segment]);
 	var midpoint = pair[0];
 
-	var ls1 = new geo.LineSegment(segment.start, midpoint);
-	var ls2 = new geo.LineSegment(midpoint, segment.end);
-	this.objects.linesegs.push(ls1, ls2);
-	this.congruences.add(ls1, ls2);
+	var ls1 = this.objects.create(new geo.LineSegment(segment.start, midpoint));
+	var ls2 = this.objects.create(new geo.LineSegment(midpoint, segment.end));
+	this.givens.add('congruence', [ls1, ls2]);
 
 	this.result = midpoint.toString() + " splits " + segment +
 				  " into two congruent line segments: " +

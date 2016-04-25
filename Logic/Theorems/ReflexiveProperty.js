@@ -1,23 +1,23 @@
 'use strict';
 var Theorem = require('./Theorem');
 
-var ReflexiveProperty = function(objects, congruences) {
+var ReflexiveProperty = function(objects, givens) {
 	Theorem.call(this, objects);
 	this.name = "Reflexive Property";
-	this.congruences = congruences;
+	this.givens = givens;
 	this.requires = {"LineSegment": 1};
 };
 
 // Inherit from Theorem
-MidpointSplittingTheorem.prototype = Object.create(Theorem.prototype);
-MidpointSplittingTheorem.prototype.constructor = MidpointSplittingTheorem;
+ReflexiveProperty.prototype = Object.create(Theorem.prototype);
+ReflexiveProperty.prototype.constructor = ReflexiveProperty;
 
 ReflexiveProperty.prototype.checkConditions = function(obj) {
 	return true;
 };
 
 ReflexiveProperty.prototype.applyResults = function(obj) {
-	congruences.add(obj, obj);
+	this.givens.add('congruence', [obj, obj]);
 	this.result = this.name + " " + obj.toString() + " is congruent to itself.";
 };
 
