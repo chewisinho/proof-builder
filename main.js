@@ -512,7 +512,7 @@ ReflexiveProperty.prototype.checkConditions = function(obj) {
 
 ReflexiveProperty.prototype.applyResults = function(obj) {
 	this.givens.add('congruence', [obj, obj]);
-	this.result = this.name + " " + obj.toString() + " is congruent to itself.";
+	this.result = obj.toString() + " is congruent to itself.";
 };
 
 module.exports = ReflexiveProperty;
@@ -659,7 +659,7 @@ var sgBD = new geo.LineSegment(new geo.Point('B'), new geo.Point('D'));
 var trABD = new geo.Triangle(new geo.Point('A'), new geo.Point('B'), new geo.Point('D'));
 var trCBD = new geo.Triangle(new geo.Point('C'), new geo.Point('B'), new geo.Point('D'));
 
-console.log("\n== Solved? %s", givenState.contains('congruence', [trABD, trCBD]));
+console.log("== Solved? %s", givenState.contains('congruence', [trABD, trCBD]));
 
 var thm, applicable; // variables for theorem being used and applicability
 
@@ -668,7 +668,7 @@ thm = new ReflexiveProperty(objects, givenState);
 applicable = thm.checkConditions(sgBD);
 if (applicable) {
 	thm.applyResults(sgBD);
-	console.log(thm.result);
+	console.log(thm.toString());
 }
 
 // Use Midpoint Splitting Theorem
@@ -676,7 +676,7 @@ thm = new MidpointSplittingTheorem(objects, givenState);
 applicable = thm.checkConditions(sgAC);
 if (applicable) {
 	thm.applyResults(sgAC);
-	console.log(thm.result);
+	console.log(thm.toString());
 }
 
 // Use SSS
@@ -684,9 +684,9 @@ thm = new SSSPostulate(objects, givenState);
 applicable = thm.checkConditions(trABD, trCBD);
 if (applicable) {
 	thm.applyResults(trABD, trCBD);
-	console.log(thm.result);
+	console.log(thm.toString());
 }
 
-console.log("\nSolved? %s", givenState.contains('congruence', [trABD, trCBD]));
+console.log("== Solved? %s", givenState.contains('congruence', [trABD, trCBD]));
 
 },{"./Examples/Exercise1":1,"./Graphics/Geometry":2,"./Logic/Objects/Geometry":4,"./Logic/Objects/ObjectDB":6,"./Logic/Properties/ProofState":12,"./Logic/Theorems/MidpointSplittingTheorem":13,"./Logic/Theorems/ReflexiveProperty":14,"./Logic/Theorems/SSSPostulate":15,"./Logic/Theorems/Theorem":16}]},{},[18]);
