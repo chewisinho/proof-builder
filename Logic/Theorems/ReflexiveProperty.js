@@ -18,7 +18,7 @@ ReflexiveProperty.prototype.checkConditions = function(obj) {
 
 ReflexiveProperty.prototype.applyResults = function(obj) {
 	this.givens.add('congruence', [obj, obj]);
-	this.result = this.name + " " + obj.toString() + " is congruent to itself.";
+	this.result = obj.toString() + " is congruent to itself.";
 };
 
 module.exports = ReflexiveProperty;
