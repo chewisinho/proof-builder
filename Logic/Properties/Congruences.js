@@ -17,7 +17,7 @@ Congruences.prototype.contains = function(obj1, obj2) {
 
 	if (group === undefined) {
 		console.log("Type " + obj1.name + " not in congruences!");
-		//return undefined;
+		return undefined;
 	}
 
 	// loop through the given group, linearly searching for a congruence pair

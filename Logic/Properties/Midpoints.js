@@ -12,9 +12,9 @@ Midpoints.relation = " is the midpoint of ";
 Midpoints.prototype.contains = function(point, segment) {
 	// reject non-matching types
 	if (segment.type !== "LineSegment") {
-		console.log("Midpoints do not exist for: " + segment.type + " and " +
+		console.error("Midpoints do not exist for: " + segment.type + " and " +
 					point.type);
-		return false;
+		return undefined;
 	}
 
 	// linearly search for a midpoint pair
@@ -32,9 +32,11 @@ Midpoints.prototype.contains = function(point, segment) {
 
 Midpoints.prototype.add = function(point, segment) {
 	// reject non-matching types
-	if (segment.type !== "LineSegment" || point.type !== "Point")
-		console.log("Midpoints do not exist for: " + segment.type + " and " +
+	if (segment.type !== "LineSegment" || point.type !== "Point") {
+		console.error("Midpoints do not exist for: " + segment.type + " and " +
 					point.type);
+		return undefined;
+	}
 
 	// prevent adding an already existing pair
 	if (!this.contains(point, segment)) {
