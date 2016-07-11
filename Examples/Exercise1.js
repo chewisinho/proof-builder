@@ -24,5 +24,5 @@ givenState.add('congruence', [sgAD, sgCD]);
 var goalState = new ProofState();
 goalState.add('congruence', [trABD, trCBD]);
 
-var Exercise1 = new Save('Exercise 1', objects, givenState, [], goalState);
+var Exercise1 = new Save('Exercise 1', objects, givenState, [], goalState, './resources/ex_1.png');
 module.exports = Exercise1;

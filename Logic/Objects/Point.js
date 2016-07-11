@@ -2,19 +2,19 @@
 
 /**
  * Point object.
- * name (String) - The name of the point.
+ * label (String) - The name/label of the point.
  */
-var Point = function(name) {
+var Point = function(label) {
 	this.type = "Point";
-	this.name = name;
+	this.label = label;
 };
 
 Point.prototype.equals = function(other) {
-	return this.name === other.name;
+	return this.label === other.label;
 };
 
 Point.prototype.toString = function() {
-	return this.name;
+	return this.label;
 };
 
 module.exports = Point;

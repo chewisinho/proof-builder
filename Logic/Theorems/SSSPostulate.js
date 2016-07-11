@@ -5,10 +5,11 @@ var Theorem = require('./Theorem')
 
 var SSSPostulate = function(objects, givens) {
 	Theorem.call(this, objects);
-	this.name = "Side-Side-Side Postulate";
 	this.givens = givens;
 	this.requires = {"Triangle": 2};
 };
+
+SSSPostulate.title = "Side-Side-Side Postulate";
 
 // Inherit from Theorem
 SSSPostulate.prototype = Object.create(Theorem.prototype);

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Proof Builder</title>
+        <link href="pfstyle.css" rel="stylesheet">
+        <!-- JQUERY -->
+        <script src="Libraries/jquery-ui/external/jquery/jquery.js"></script>
+        <!-- JQUERY UI -->
+        <script src="Libraries/jquery-ui/jquery-ui.js"></script>
+    </head>
+    <body>
+        <div id="dialog"></div>
+        <div id="sidebar">
+            <ul>
+                <li class="action"><h1>Proof Builder</h1></li>
+                <li id="save-button" class="unimp action">Save... (coming soon)</li>
+                <li id="load-button" class="unimp action">Load... (coming soon)</li>
+                <li class="unimp action">More options to come (;</li>
+                <li><p>Written by the ProofBuilder team! (Sinho, Chris, Elizabeth)</p></li>
+            </ul>
+        </div>
+        <div id="section-container">
+            <div id="known-section" class="section">
+                <ul class="section-header">
+                    <li class="title">KNOWN</li>
+                </ul>
+                <ul class="section-contents">
+                    <li>Fact</li>
+                    <li>Fact</li>
+                    <li>Fact</li>
+                </ul>
+            </div>
+            <div id="graphic-section" class="section">
+                <ul class="section-header">
+                    <li class="title">PROVE</li>
+                    <li id="proof-goal">[Insert proof goal here.]</li>
+                </ul>
+                <img id="proof-graphic">
+            </div>
+            <div id="theorem-section" class="section">
+                <ul class="section-header">
+                    <li class="title">THEOREMS</li>
+                    <li title="Theorems that have been proved for you." id="given-button" class="active">GIVEN</li>
+                    <li title="Access constructed theorems." id="built-button">BUILT</li>
+                    <li title="Unimplemented!" class="unimp"> + </li>
+                </ul>
+                <ul class="section-contents"></ul>
+            </div>
+            <div id="bench-section" class="section">
+                <ul class="section-header">
+                    <li class="title">BENCH</li>
+                </ul>
+                <ul class="section-contents">
+                    <li>Proof Step</li>
+                </ul>
+            </div>
+        </div>
+        <script src="./main.js"></script>
+    </body>
+</html>

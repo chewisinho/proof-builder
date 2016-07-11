@@ -9,10 +9,11 @@ var Theorem = require('./Theorem');
  */
 var MidpointSplittingTheorem = function(objects, givens) {
 	Theorem.call(this, objects);
-	this.name = "Midpoint Splitting Theorem";
 	this.givens = givens;
 	this.requires = {"LineSegment": 1};
 };
+
+MidpointSplittingTheorem.title = "Midpoint Splitting Theorem";
 
 // Inherit from Theorem
 MidpointSplittingTheorem.prototype = Object.create(Theorem.prototype);

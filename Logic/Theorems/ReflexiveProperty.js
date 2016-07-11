@@ -3,10 +3,11 @@ var Theorem = require('./Theorem');
 
 var ReflexiveProperty = function(objects, givens) {
 	Theorem.call(this, objects);
-	this.name = "Reflexive Property";
 	this.givens = givens;
 	this.requires = {"LineSegment": 1};
 };
+
+ReflexiveProperty.title = "Reflexive Property";
 
 // Inherit from Theorem
 ReflexiveProperty.prototype = Object.create(Theorem.prototype);
