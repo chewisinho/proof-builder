@@ -35,6 +35,11 @@ function main() {
             GUI.open_confirm_dialog(name, 'Apply ' + name + '?', function() {console.log(name)}); 
         });
     };
+    
+    // TODO: Load button should load more than just Ex 1
+    $('#load-button').on('click', function(event) {
+        
+    });
 
     $('#built-button').on('click', function(event) {
         GUI.display_list('#theorem-section .section-contents',
@@ -59,7 +64,6 @@ function main() {
     });
     
     thm_apply_event();
-
 }
 
 main();
